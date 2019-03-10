@@ -1,7 +1,7 @@
 # Pump Yourself
 
 ## Idea
-"Pump Yourself" is a combination of a workout tracker and a daily meal planning application. You can easily monitor your diet, follow different training plans or take notes about your own physical exercises. You can add your friends in the application and organize competitions between each other. The app also has user profile, fitness goals and personalized tips. Thanks to Pump yourself, you can change your body and soul for the better.
+"Pump Yourself" is a combination of a workout tracker and a daily meal planning application. You can easily monitor your diet, follow different training plans or take notes about your own physical exercises. You can add your friends in the application and organize competitions between each other. The app also has user profile, fitness goals and personalized tips. Thanks to "Pump Yourself", you can change your body and soul for the better.
 
 ## Requirements
 - Requires at least Android 5.0 (API level 21)
