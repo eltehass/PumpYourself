@@ -6,13 +6,16 @@
 ## Requirements
 - Requires at least Android 5.0 (API level 21)
 - Minimum RAM requirement is 1GB
-- Permissions: Contacts, Camera, Microphone, Storage
+- This application has access to:
+	* Photos/Media/Files (Uses one or more of: files on the device such as images, videos or audio, the device's external storage)
+	* Camera (Uses the device's camera(s))
+	* Other (Receives data from internet)
 
 ## Target audience
-The target audience for the application Pump yourself - teenagers and older people who want to:
+The target audience for the application "Pump yourself" - teenagers and older people who want to:
 - Start doing sports and achieve some results
 - Follow proper nutrition
-- Keep body healthy and promoting it improvement
+- Keep body healthy and promote its improvement
 
 ## Use Case diagram
 <p align="center">
