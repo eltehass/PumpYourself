@@ -24,5 +24,5 @@ The target audience for the application "Pump yourself" - teenagers and older pe
 
 ## Raw prototype
 <p align="center">
-	<img src="app/src/main/res/diagrams/ezgif.com-video-to-gif.gif?raw=true" alt="Use Case Diagram">
+	<img src="app/src/main/res/diagrams/ezgif.com-video-to-gif.gif?raw=true" width="250" height="500">
 </p>
