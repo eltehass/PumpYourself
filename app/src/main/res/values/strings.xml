@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PumpYourself</string>
+
+    <string name="title_meal">Meal</string>
+    <string name="title_trainings">Trainings</string>
+    <string name="title_groups">Groups</string>
+    <string name="title_profile">Profile</string>
+
+</resources>
