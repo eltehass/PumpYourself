@@ -19,10 +19,10 @@ The target audience for the application "Pump yourself" - teenagers and older pe
 
 ## Use Case diagram
 <p align="center">
-	<img src="app/src/main/res/diagrams/use_case_v2.0.png" alt="Use Case Diagram">
+	<img src="docs/use_case_v2.0.png" alt="Use Case Diagram">
 </p>
 
 ## Raw prototype
 <p align="center">
-	<img src="app/src/main/res/diagrams/ezgif.com-video-to-gif.gif?raw=true" width="250" height="500">
+	<img src="docs/prototype.gif?raw=true" width="250" height="500">
 </p>
