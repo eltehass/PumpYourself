@@ -7,15 +7,13 @@ import leo.com.pumpyourself.controllers.BaseController
 
 class MealDeep1Controller : BaseController() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        view.setOnClickListener {
-            show(TAB_MEAL, MealDeep2Controller())
-        }
-    }
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    view.setOnClickListener { show(TAB_MEAL, MealDeep2Controller()) }
+  }
 
-    override fun getLayoutId(): Int = R.layout.layout_meal_deep1
+  override fun getLayoutId(): Int = R.layout.layout_meal_deep1
 
-    override fun getTitle(): String = "MealDeep1"
+  override fun getTitle(): String = "MealDeep1"
 
 }

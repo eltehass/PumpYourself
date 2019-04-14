@@ -9,28 +9,28 @@ import leo.com.pumpyourself.MainActivity
 
 abstract class BaseController : Fragment() {
 
-    companion object {
-        const val TAB_MEAL = "tab_meal"
-        const val TAB_TRAININGS = "tab_trainings"
-        const val TAB_GROUPS = "tab_groups"
-        const val TAB_PROFILE = "tab_profile"
-    }
+  companion object {
+    const val TAB_MEAL = "tab_meal"
+    const val TAB_TRAININGS = "tab_trainings"
+    const val TAB_GROUPS = "tab_groups"
+    const val TAB_PROFILE = "tab_profile"
+  }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayoutId(), container, false)
-    }
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    return inflater.inflate(getLayoutId(), container, false)
+  }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (activity as MainActivity).updateToolbarTitle(getTitle())
-    }
+  override fun onActivityCreated(savedInstanceState: Bundle?) {
+    super.onActivityCreated(savedInstanceState)
+    (activity as MainActivity).updateToolbarTitle(getTitle())
+  }
 
-    fun show(stackTab: String, fragment: Fragment) {
-        (activity as MainActivity).pushFragments(stackTab, fragment, true)
-    }
+  fun show(stackTab: String, fragment: Fragment) {
+    (activity as MainActivity).pushFragments(stackTab, fragment, true)
+  }
 
-    abstract fun getLayoutId(): Int
+  abstract fun getLayoutId(): Int
 
-    abstract fun getTitle(): String
+  abstract fun getTitle(): String
 
 }

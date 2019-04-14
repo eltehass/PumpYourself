@@ -5,8 +5,8 @@ import leo.com.pumpyourself.controllers.BaseController
 
 class ProfileController : BaseController() {
 
-    override fun getLayoutId(): Int = R.layout.layout_profile
+  override fun getLayoutId(): Int = R.layout.layout_profile
 
-    override fun getTitle(): String = "Profile"
+  override fun getTitle(): String = "Profile"
 
 }
