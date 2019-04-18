@@ -5,7 +5,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import kotlinx.android.synthetic.main.activity_main.navigation
+import kotlinx.android.synthetic.main.activity_main.*
 import leo.com.pumpyourself.controllers.BaseController.Companion.TAB_GROUPS
 import leo.com.pumpyourself.controllers.BaseController.Companion.TAB_MEAL
 import leo.com.pumpyourself.controllers.BaseController.Companion.TAB_PROFILE
@@ -14,7 +14,7 @@ import leo.com.pumpyourself.controllers.groups.GroupsController
 import leo.com.pumpyourself.controllers.meal.MealController
 import leo.com.pumpyourself.controllers.profile.ProfileController
 import leo.com.pumpyourself.controllers.trainings.TrainingsController
-import java.util.Stack
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,6 +62,18 @@ class MainActivity : AppCompatActivity() {
 
     navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     navigation.selectedItemId = R.id.navigation_meal
+  }
+
+  fun showToolbar() {
+    if (!supportActionBar?.isShowing!!) {
+      supportActionBar?.show()
+    }
+  }
+
+  fun hideToolbar() {
+    if (supportActionBar?.isShowing!!) {
+      supportActionBar?.hide()
+    }
   }
 
   fun updateToolbarTitle(title: String) {
