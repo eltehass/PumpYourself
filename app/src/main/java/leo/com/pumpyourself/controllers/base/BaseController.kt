@@ -1,4 +1,4 @@
-package leo.com.pumpyourself.controllers
+package leo.com.pumpyourself.controllers.base
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -12,6 +12,7 @@ import leo.com.pumpyourself.MainActivity
 abstract class BaseController<LayoutClassBinding : ViewDataBinding> : Fragment() {
 
   lateinit var mainActivity: MainActivity
+  abstract var binding: LayoutClassBinding
 
   companion object {
     const val TAB_MEAL = "tab_meal"
@@ -21,8 +22,7 @@ abstract class BaseController<LayoutClassBinding : ViewDataBinding> : Fragment()
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    val binding: LayoutClassBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
-    setDataForView(binding)
+    binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
     return binding.root
   }
 
@@ -36,7 +36,6 @@ abstract class BaseController<LayoutClassBinding : ViewDataBinding> : Fragment()
     mainActivity.pushFragments(stackTab, fragment, true)
   }
 
-  abstract fun setDataForView(binding: LayoutClassBinding)
 
   abstract fun getLayoutId(): Int
 

@@ -2,22 +2,22 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
-
-  <data>
-
-    <variable
-        name="controller"
-        type="leo.com.pumpyourself.controllers.meal.MealController"
-        />
-
-  </data>
+    xmlns:tools="http://schemas.android.com/tools">
 
   <android.support.constraint.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       >
+
+      <android.support.v7.widget.RecyclerView
+              android:id="@+id/rv_container"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              tools:listitem="@layout/item_example"
+              app:layout_constraintTop_toBottomOf="@+id/imageView" android:layout_marginTop="16dp"/>
 
     <ImageView
         android:id="@+id/imageView"
@@ -31,16 +31,17 @@
         />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
-        android:text="@{controller.titleText}"
-        tools:text="What eto prikol!"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:text="What eto prikol!"
         />
+
 
   </android.support.constraint.ConstraintLayout>
 

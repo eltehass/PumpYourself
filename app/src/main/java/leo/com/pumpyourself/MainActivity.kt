@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_main.*
-import leo.com.pumpyourself.controllers.BaseController.Companion.TAB_GROUPS
-import leo.com.pumpyourself.controllers.BaseController.Companion.TAB_MEAL
-import leo.com.pumpyourself.controllers.BaseController.Companion.TAB_PROFILE
-import leo.com.pumpyourself.controllers.BaseController.Companion.TAB_TRAININGS
+import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_GROUPS
+import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_MEAL
+import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_PROFILE
+import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_TRAININGS
 import leo.com.pumpyourself.controllers.groups.GroupsController
 import leo.com.pumpyourself.controllers.meal.MealController
 import leo.com.pumpyourself.controllers.profile.ProfileController
