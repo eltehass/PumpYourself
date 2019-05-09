@@ -26,3 +26,6 @@ The target audience for the application "Pump yourself" - teenagers and older pe
 <p align="center">
 	<img src="docs/prototype.gif?raw=true" width="250" height="500">
 </p>
+
+## Design
+[View desing in separate document](https://github.com/leonid347/PumpYourself/blob/master/design.md)
