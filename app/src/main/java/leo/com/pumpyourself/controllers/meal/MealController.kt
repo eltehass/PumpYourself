@@ -1,9 +1,13 @@
 package leo.com.pumpyourself.controllers.meal
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
+import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
+import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
+import leo.com.pumpyourself.databinding.ItemExampleBinding
 import leo.com.pumpyourself.databinding.LayoutMealBinding
 
 class MealController : BaseController<LayoutMealBinding>() {
@@ -15,7 +19,14 @@ class MealController : BaseController<LayoutMealBinding>() {
     view.setOnClickListener { show(TAB_MEAL, MealDeep1Controller()) }
 
     binding.textView.text = "Hellout world"
-    //binding.rvContainer.initWithLinLay(view.context, LinearLayoutManager.VERTICAL, CustomAdapter(), listData)
+
+    val dataList = listOf(
+      DataText("title1","content1"),
+      DataText("title2","content2"),
+      DataText("title3","content3"),
+      DataText("title4","content4"))
+
+    binding.rvContainer.initWithLinLay(LinearLayoutManager.VERTICAL, CustomAdapter(), dataList)
   }
 
   override fun getLayoutId(): Int = R.layout.layout_meal
@@ -24,28 +35,15 @@ class MealController : BaseController<LayoutMealBinding>() {
 
 }
 
-///** DATA CLASS THAT REPRESENT ITEM */
-//data class DataText(val title: String, val content: String)
-//
-///** DATA HOLDER THAT GETTING AND BINDING DATA */
-//class CustomViewHolder(view: View) : LazyViewHolder<DataText>(view) {
-//
-//  private val tvTitle = view.findViewById<TextView>(R.id.tv_title)
-//  private val tvContent = view.findViewById<TextView>(R.id.tv_content)
-//
-//  override fun bindData(data: DataText) {
-//    super.bindData(data)
-//    tvTitle.text = data.title
-//    tvContent.text = data.content
-//  }
-//
-//}
-//
-///** ADAPTER FOR CONVERTING DATA WITH TYPE "DataText" TO THE VIEW, RecyclerView using adapter for setting elements **/
-//class CustomAdapter : LazyAdapter<DataText>() {
-//
-//  override fun createViewHolder(view: View): LazyViewHolder<DataText> = CustomViewHolder(view)
-//
-//  override fun getLayoutId(): Int = R.layout.item_example
-//
-//}
+data class DataText(val title: String, val content: String)
+
+class CustomAdapter : LazyAdapter<DataText, ItemExampleBinding>() {
+
+  override fun bindData(data: DataText, binding: ItemExampleBinding) {
+    binding.tvTitle.text = data.title
+    binding.tvContent.text = data.content
+  }
+
+  override fun getLayoutId(): Int = R.layout.item_example
+
+}
