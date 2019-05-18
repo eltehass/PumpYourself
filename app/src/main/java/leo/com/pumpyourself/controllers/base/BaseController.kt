@@ -7,12 +7,21 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import leo.com.pumpyourself.MainActivity
+import leo.com.pumpyourself.network.AndroidCoroutineContextElement
+import leo.com.pumpyourself.network.doCoroutineWork
 
 abstract class BaseController<LayoutClassBinding : ViewDataBinding> : Fragment() {
 
   lateinit var mainActivity: MainActivity
   abstract var binding: LayoutClassBinding
+
+  private var coroutineJob = Job()
+  private val coroutineScope = CoroutineScope(Dispatchers.Main + coroutineJob)
+  private var isActive = true
 
   companion object {
     const val TAB_MEAL = "tab_meal"
@@ -32,10 +41,25 @@ abstract class BaseController<LayoutClassBinding : ViewDataBinding> : Fragment()
     mainActivity.updateToolbarTitle(getTitle())
   }
 
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    initController()
+  }
+
   fun show(stackTab: String, fragment: Fragment) {
     mainActivity.pushFragments(stackTab, fragment, true)
   }
 
+  override fun onDestroy() {
+    coroutineJob.cancel()
+    super.onDestroy()
+  }
+
+  fun <P> asyncSafe(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
+    doCoroutineWork(doOnAsyncBlock, coroutineScope, AndroidCoroutineContextElement)
+  }
+
+  open fun initController() {}
 
   abstract fun getLayoutId(): Int
 
