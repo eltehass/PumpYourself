@@ -19,10 +19,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="4"
-        tools:listitem="@layout/training_item"
+        tools:listitem="@layout/item_training"
         />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

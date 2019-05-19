@@ -21,7 +21,6 @@ abstract class BaseController<LayoutClassBinding : ViewDataBinding> : Fragment()
 
   private var coroutineJob = Job()
   private val coroutineScope = CoroutineScope(Dispatchers.Main + coroutineJob)
-  private var isActive = true
 
   companion object {
     const val TAB_MEAL = "tab_meal"
@@ -48,11 +47,6 @@ abstract class BaseController<LayoutClassBinding : ViewDataBinding> : Fragment()
 
   fun show(stackTab: String, fragment: Fragment) {
     mainActivity.pushFragments(stackTab, fragment, true)
-  }
-
-  override fun onDestroy() {
-    coroutineJob.cancel()
-    super.onDestroy()
   }
 
   fun <P> asyncSafe(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
