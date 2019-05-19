@@ -19,23 +19,22 @@
                 android:id="@+id/iv_group_icon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:src="@drawable/ic_add_plus_circle"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:background="@android:color/holo_blue_dark" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:background="@android:color/transparent"
                 android:id="@+id/et_group_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="8dp"
-                android:background="@android:color/transparent"
-                android:hint="Group name"
                 android:textColor="#364E80"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintStart_toEndOf="@+id/iv_group_icon"
-                tools:text="Group of four" />
+                android:hint="Group name" />
 
             <View
                 android:id="@+id/view"
@@ -95,17 +94,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/rv_members" />
 
             <EditText
+                android:background="@android:color/transparent"
                 android:id="@+id/et_group_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@android:color/transparent"
-                android:hint="Group description"
                 android:textColor="#364E80"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
-                tools:text="Group for morning run" />
+                android:hint="Group description" />
 
             <View
                 android:id="@+id/view1"
@@ -128,6 +126,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view1" />
 
+            <TextView
+                android:id="@+id/tv_add_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="Add day"
+                android:textAllCaps="true"
+                android:textColor="#3E7AF3"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view1" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_days"
                 android:layout_width="0dp"
@@ -141,34 +152,17 @@
                 tools:listitem="@layout/item_day_exercise" />
 
             <TextView
-                android:id="@+id/tv_remove"
+                android:id="@+id/tv_create"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="21dp"
-                android:text="Remove"
-                android:textAllCaps="true"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/tv_save"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_days" />
-
-
-            <TextView
-                android:id="@+id/tv_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
-                android:text="Save"
+                android:text="Create"
                 android:textAllCaps="true"
                 android:textColor="#3E7AF3"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tv_remove"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_days" />
 
         </android.support.constraint.ConstraintLayout>

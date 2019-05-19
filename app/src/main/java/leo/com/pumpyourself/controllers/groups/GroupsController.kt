@@ -28,7 +28,7 @@ class GroupsController : BaseController<LayoutGroupsBinding>(), LazyAdapter.OnIt
     )
 
     binding.rvContainer.initWithLinLay(LinearLayout.VERTICAL, GroupsAdapter(this), listData)
-
+    binding.fabAction.setOnClickListener { show(TAB_GROUPS, CreateGroupController()) }
   }
 
   override fun onLazyItemClick(data: ItemGroup) {
