@@ -1,11 +1,14 @@
 package leo.com.pumpyourself
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_main.*
+import leo.com.pumpyourself.common.ImageGalleryEvent
 import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_GROUPS
 import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_MEAL
 import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_PROFILE
@@ -14,6 +17,7 @@ import leo.com.pumpyourself.controllers.groups.GroupsController
 import leo.com.pumpyourself.controllers.meal.MealController
 import leo.com.pumpyourself.controllers.profile.ProfileController
 import leo.com.pumpyourself.controllers.trainings.TrainingsController
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -130,6 +134,12 @@ class MainActivity : AppCompatActivity() {
 
     supportActionBar?.setDisplayHomeAsUpEnabled(controllerStacks[currentControllerTabName]?.size!! != 1)
     supportActionBar?.setDisplayShowHomeEnabled(controllerStacks[currentControllerTabName]?.size!! != 1)
+  }
+
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    if (resultCode != Activity.RESULT_OK) { return }
+    data?.data?.let { EventBus.getDefault().post(ImageGalleryEvent(it)) }
   }
 
 }

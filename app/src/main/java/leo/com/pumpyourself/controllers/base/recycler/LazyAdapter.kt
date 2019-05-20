@@ -16,6 +16,11 @@ abstract class LazyAdapter <DataType, LayoutClassBinding : ViewDataBinding> (val
         notifyDataSetChanged()
     }
 
+    fun addData(dataElement: DataType) {
+        data.add(dataElement)
+        notifyItemInserted(data.size - 1)
+    }
+
     override fun onBindViewHolder(holder: NewLazyViewHolder<DataType>, position: Int) {
         holder.bindData(data[position])
     }
