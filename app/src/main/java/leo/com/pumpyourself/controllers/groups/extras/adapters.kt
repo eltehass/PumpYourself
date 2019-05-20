@@ -4,6 +4,7 @@ import leo.com.pumpyourself.R
 import leo.com.pumpyourself.common.setCircleImgResource
 import leo.com.pumpyourself.common.setCircleImgUrl
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
+import leo.com.pumpyourself.databinding.ItemChooseFriendBinding
 import leo.com.pumpyourself.databinding.ItemDayExerciseBinding
 import leo.com.pumpyourself.databinding.ItemGroupBinding
 import leo.com.pumpyourself.databinding.ItemMemberBinding
@@ -50,5 +51,22 @@ class DayExercisesAdapter : LazyAdapter<ItemDayExercise, ItemDayExerciseBinding>
   }
 
   override fun getLayoutId(): Int = R.layout.item_day_exercise
+
+}
+
+class FriendsAdapter : LazyAdapter<ItemFriend, ItemChooseFriendBinding>() {
+
+  override fun bindData(data: ItemFriend, binding: ItemChooseFriendBinding) {
+    binding.tvName.text = data.name
+    binding.tvStatus.text = data.status
+
+    if (data.imgUrl.isNotEmpty()) {
+      binding.ivIcon.setCircleImgUrl(data.imgUrl)
+    } else {
+      binding.ivIcon.setCircleImgResource(R.drawable.ic_launcher_background)
+    }
+  }
+
+  override fun getLayoutId(): Int = R.layout.item_choose_friend
 
 }

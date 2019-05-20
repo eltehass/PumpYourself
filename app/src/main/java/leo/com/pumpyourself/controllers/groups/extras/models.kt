@@ -17,3 +17,9 @@ data class ItemDayExercise(
   val name: String,
   val description: String
 )
+
+data class ItemFriend(
+  val name: String,
+  val status: String,
+  val imgUrl: String
+)

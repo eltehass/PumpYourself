@@ -87,6 +87,10 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
     binding.rvMembers.initWithLinLay(LinearLayout.VERTICAL, MembersAdapter(), members)
     binding.rvDays.initWithLinLay(LinearLayout.VERTICAL, DayExercisesAdapter(), listOf())
 
+    binding.tvAddMember.setOnClickListener {
+      show(TAB_GROUPS, FriendsController())
+    }
+
     binding.tvAddDay.setOnClickListener {
       dialog.show()
     }
@@ -99,12 +103,14 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
 
       startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
-
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
-      EventBus.getDefault().register(this)
+
+      if (!EventBus.getDefault().isRegistered(this)) {
+        EventBus.getDefault().register(this)
+      }
   }
 
   @Subscribe

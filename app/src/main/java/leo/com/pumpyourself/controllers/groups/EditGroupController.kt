@@ -60,6 +60,10 @@ class EditGroupController : BaseController<LayoutEditGroupBinding>() {
     binding.rvMembers.initWithLinLay(LinearLayout.VERTICAL, MembersAdapter(), members)
     binding.rvDays.initWithLinLay(LinearLayout.VERTICAL, DayExercisesAdapter(), dayExercises)
 
+    binding.tvAddMember.setOnClickListener {
+      show(TAB_GROUPS, FriendsController())
+    }
+
     binding.ivGroupIcon.setOnClickListener {
       val intent = Intent(Intent.ACTION_PICK).apply {
         type = "image/*"
@@ -72,7 +76,10 @@ class EditGroupController : BaseController<LayoutEditGroupBinding>() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    EventBus.getDefault().register(this)
+
+    if (!EventBus.getDefault().isRegistered(this)) {
+      EventBus.getDefault().register(this)
+    }
   }
 
   @Subscribe
