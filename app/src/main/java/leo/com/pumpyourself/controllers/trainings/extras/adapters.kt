@@ -2,6 +2,7 @@ package leo.com.pumpyourself.controllers.trainings.extras
 
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
+import leo.com.pumpyourself.databinding.ItemDayExerciseBinding
 import leo.com.pumpyourself.databinding.ItemTrainingBinding
 import leo.com.pumpyourself.databinding.ItemTrainingNewBinding
 
