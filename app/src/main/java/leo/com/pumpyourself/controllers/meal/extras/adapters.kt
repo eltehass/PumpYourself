@@ -1,10 +1,13 @@
 package leo.com.pumpyourself.controllers.meal.extras
 
+import android.support.v7.widget.LinearLayoutManager
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.common.setCircleImgResource
 import leo.com.pumpyourself.common.setCircleImgUrl
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
+import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.databinding.ItemMealBinding
+import leo.com.pumpyourself.databinding.ItemMealHistoryBinding
 import leo.com.pumpyourself.databinding.ItemMealUnitBinding
 
 class MealUnitAdapter : LazyAdapter<ItemMealUnit, ItemMealUnitBinding>() {
@@ -18,7 +21,7 @@ class MealUnitAdapter : LazyAdapter<ItemMealUnit, ItemMealUnitBinding>() {
 
 }
 
-class MealAdapter(onClick: OnItemClickListener<ItemMeal>) : LazyAdapter<ItemMeal, ItemMealBinding>(onClick) {
+class MealAdapter(onClick: OnItemClickListener<ItemMeal>?) : LazyAdapter<ItemMeal, ItemMealBinding>(onClick) {
 
     override fun bindData(data: ItemMeal, binding: ItemMealBinding) {
         binding.tvName.text = data.name
@@ -33,5 +36,16 @@ class MealAdapter(onClick: OnItemClickListener<ItemMeal>) : LazyAdapter<ItemMeal
     }
 
     override fun getLayoutId(): Int = R.layout.item_meal
+
+}
+
+class MealHistoryAdapter : LazyAdapter<ItemMealHistory, ItemMealHistoryBinding>() {
+
+    override fun bindData(data: ItemMealHistory, binding: ItemMealHistoryBinding) {
+        binding.tvMealDate.text = data.date
+        binding.rvMeals.initWithLinLay(LinearLayoutManager.VERTICAL, MealAdapter(null), data.meals)
+    }
+
+    override fun getLayoutId(): Int = R.layout.item_meal_history
 
 }

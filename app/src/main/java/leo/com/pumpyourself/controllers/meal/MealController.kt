@@ -40,11 +40,14 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
       )
 
       binding.tvAddMeal.setOnClickListener { show(TAB_MEAL, AddMealController()) }
+      binding.tvShowHistory.setOnClickListener { show(TAB_MEAL, MealHistoryController()) }
 
       binding.tvCalendarDate.text = "April 7, 2017"
-      binding.acvChart.initWithValues(145, 30, 95, 60)
+      binding.acvChart.initWithValues(145, 30, 95, 60,"Consumed stuff")
       binding.rvMealUnits.initWithGridLay(2, MealUnitAdapter(), mealUnits)
       binding.rvMeals.initWithLinLay(LinearLayoutManager.VERTICAL, MealAdapter(this), meals)
+
+      binding.cv2.setOnClickListener { show(TAB_MEAL, MealStatisticsController()) }
 
       binding.ivCalendar.setOnClickListener {
           if (year == -1) {

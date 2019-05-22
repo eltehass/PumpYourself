@@ -26,7 +26,7 @@ fun ImageView.setCircleImgResource(imgResource: Int) {
         .into(this)
 }
 
-fun AnyChartView.initWithValues(value1: Int, value2: Int, value3: Int, value4: Int) {
+fun AnyChartView.initWithValues(value1: Int, value2: Int, value3: Int, value4: Int, title: String) {
     val cartesian = AnyChart.column()
 
     val data = listOf(
@@ -47,7 +47,7 @@ fun AnyChartView.initWithValues(value1: Int, value2: Int, value3: Int, value4: I
             .format("{%Value}%")
 
     cartesian.animation(true)
-    cartesian.title("Consumed stuff")
+    cartesian.title(title)
 
     cartesian.yScale().minimum(0.0)
 

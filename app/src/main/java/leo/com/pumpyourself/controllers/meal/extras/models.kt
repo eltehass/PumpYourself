@@ -10,3 +10,8 @@ data class ItemMeal(
   val value: String,
   val imgUrl: String
 )
+
+data class ItemMealHistory(
+  val date: String,
+  val meals: List<ItemMeal>
+)

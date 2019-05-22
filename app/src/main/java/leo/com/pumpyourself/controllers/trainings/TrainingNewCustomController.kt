@@ -2,6 +2,7 @@ package leo.com.pumpyourself.controllers.trainings
 
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
+import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.controllers.trainings.extras.DayExercisesAdapter
 import leo.com.pumpyourself.controllers.trainings.extras.ItemDayExercise
 import leo.com.pumpyourself.databinding.LayoutTrainingNewCustomBinding
@@ -33,9 +35,8 @@ class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBindin
             if (dialogEditText.text.toString().isEmpty()) {
                 Toast.makeText(it.context, "Field is empty", Toast.LENGTH_LONG).show()
             } else {
-                (binding.rvDays.adapter as DayExercisesAdapter).let{ adapter ->
-                    adapter.addData(ItemDayExercise("Day${adapter.itemCount+1}", dialogEditText.text.toString()))
-                }
+                val adapter = binding.rvDays.adapter as DayExercisesAdapter
+                adapter.addData(ItemDayExercise("Day${adapter.itemCount+1}", dialogEditText.text.toString()))
 
                 dialogEditText.setText("")
                 dialog.dismiss()
@@ -55,6 +56,8 @@ class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBindin
         binding.tvAddDay.setOnClickListener {
             dialog.show()
         }
+
+        binding.rvDays.initWithLinLay(LinearLayoutManager.VERTICAL, DayExercisesAdapter(), listOf())
     }
 
     override fun getLayoutId(): Int = R.layout.layout_training_new_custom
