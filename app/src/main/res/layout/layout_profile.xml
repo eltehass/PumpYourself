@@ -59,7 +59,7 @@
                             tools:layout_editor_absoluteY="5dp">
 
                         <TextView
-                                android:id="@+id/tv_title"
+                                android:id="@+id/tv_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentTop="true"
@@ -72,7 +72,7 @@
                                 tools:text="Ser samuel"/>
 
                         <TextView
-                                android:id="@+id/tv_description"
+                                android:id="@+id/tv_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
@@ -83,7 +83,7 @@
                                 android:textSize="16sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_name"
                                 tools:text="Sample status"/>
 
                         <ImageView
@@ -154,7 +154,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_friends_number"
-                        tools:text="friends"/>
+                        android:text="friends"/>
 
             </android.support.constraint.ConstraintLayout>
 
@@ -204,7 +204,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/info_icon"
-                        tools:text="notifications"/>
+                        android:text="notifications"/>
 
             </android.support.constraint.ConstraintLayout>
 

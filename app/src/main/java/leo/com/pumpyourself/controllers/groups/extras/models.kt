@@ -1,4 +1,4 @@
-package leo.com.pumpyourself.controllers.trainings.extras
+package leo.com.pumpyourself.controllers.groups.extras
 
 import java.io.Serializable
 

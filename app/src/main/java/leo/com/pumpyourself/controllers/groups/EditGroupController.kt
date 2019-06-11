@@ -10,7 +10,7 @@ import leo.com.pumpyourself.common.setCircleImgResource
 import leo.com.pumpyourself.common.setCircleImgUrl
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
-import leo.com.pumpyourself.controllers.trainings.extras.*
+import leo.com.pumpyourself.controllers.groups.extras.*
 import leo.com.pumpyourself.databinding.LayoutEditGroupBinding
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

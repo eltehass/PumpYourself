@@ -12,8 +12,8 @@ import android.widget.Toast
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
-import leo.com.pumpyourself.controllers.trainings.extras.DayExercisesAdapter
-import leo.com.pumpyourself.controllers.trainings.extras.ItemDayExercise
+import leo.com.pumpyourself.controllers.groups.extras.DayExercisesAdapter
+import leo.com.pumpyourself.controllers.groups.extras.ItemDayExercise
 import leo.com.pumpyourself.databinding.LayoutTrainingNewCustomBinding
 
 class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBinding>() {
