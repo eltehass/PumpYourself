@@ -1,4 +1,4 @@
-package leo.com.pumpyourself.controllers.trainings.extras
+package leo.com.pumpyourself.controllers.groups.extras
 
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.common.setCircleImgResource

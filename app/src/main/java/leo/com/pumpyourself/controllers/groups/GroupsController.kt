@@ -6,8 +6,8 @@ import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
-import leo.com.pumpyourself.controllers.trainings.extras.GroupsAdapter
-import leo.com.pumpyourself.controllers.trainings.extras.ItemGroup
+import leo.com.pumpyourself.controllers.groups.extras.GroupsAdapter
+import leo.com.pumpyourself.controllers.groups.extras.ItemGroup
 import leo.com.pumpyourself.databinding.LayoutGroupsBinding
 
 class GroupsController : BaseController<LayoutGroupsBinding>(), LazyAdapter.OnItemClickListener<ItemGroup> {

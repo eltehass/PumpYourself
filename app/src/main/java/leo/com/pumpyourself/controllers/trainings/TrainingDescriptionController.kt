@@ -1,14 +1,12 @@
 package leo.com.pumpyourself.controllers.trainings
 
-import android.content.Intent
 import android.widget.LinearLayout
 import leo.com.pumpyourself.R
-import leo.com.pumpyourself.common.Constants
-import leo.com.pumpyourself.common.setCircleImgResource
-import leo.com.pumpyourself.common.setCircleImgUrl
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
-import leo.com.pumpyourself.controllers.trainings.extras.*
+import leo.com.pumpyourself.controllers.groups.extras.DayExercisesAdapter
+import leo.com.pumpyourself.controllers.groups.extras.ItemDayExercise
+import leo.com.pumpyourself.controllers.trainings.extras.ItemTraining
 import leo.com.pumpyourself.databinding.LayoutTrainingDescriptionBinding
 
 class TrainingDescriptionController : BaseController<LayoutTrainingDescriptionBinding>() {

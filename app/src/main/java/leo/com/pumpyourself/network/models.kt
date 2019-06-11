@@ -125,3 +125,30 @@ data class LeaveGroupRequest(
     @SerializedName("user_id")          val userId: Int,
     @SerializedName("group_id")         val groupId: Int
 ): Serializable
+
+data class ProfileGetUserResponse(
+    @SerializedName("User_name") val userName: String,
+    @SerializedName("User_status") val userStatus: String,
+    @SerializedName("Friends_requests") val friendsRequests: List<FriendsRequest>,
+    @SerializedName("Groups_requests") val groupsRequests: List<GroupsRequest>,
+    @SerializedName("Friends") val friends: List<Friend>
+) : Serializable
+
+data class FriendsRequest(
+    @SerializedName("Friend_ID") val friendId: String,
+    @SerializedName("User_name") val userName: String,
+    @SerializedName("User_status") val userStatus: String
+) : Serializable
+
+data class GroupsRequest(
+    @SerializedName("Group_ID") val groupId: String,
+    @SerializedName("Group_name") val groupName: String,
+    @SerializedName("Group_description") val groupDescription: String
+) : Serializable
+
+data class Friend(
+    @SerializedName("Friend_ID") val friendId: String,
+    @SerializedName("User_name") val userName: String,
+    @SerializedName("User_status") val userStatus: String
+) : Serializable
+

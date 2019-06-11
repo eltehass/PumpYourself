@@ -15,10 +15,10 @@ import leo.com.pumpyourself.common.Constants.GALLERY_REQUEST_CODE
 import leo.com.pumpyourself.common.ImageGalleryEvent
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
-import leo.com.pumpyourself.controllers.trainings.extras.DayExercisesAdapter
-import leo.com.pumpyourself.controllers.trainings.extras.ItemDayExercise
-import leo.com.pumpyourself.controllers.trainings.extras.ItemMember
-import leo.com.pumpyourself.controllers.trainings.extras.MembersAdapter
+import leo.com.pumpyourself.controllers.groups.extras.DayExercisesAdapter
+import leo.com.pumpyourself.controllers.groups.extras.ItemDayExercise
+import leo.com.pumpyourself.controllers.groups.extras.ItemMember
+import leo.com.pumpyourself.controllers.groups.extras.MembersAdapter
 import leo.com.pumpyourself.databinding.LayoutCreateGroupBinding
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

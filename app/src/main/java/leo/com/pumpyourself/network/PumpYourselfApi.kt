@@ -55,6 +55,11 @@ interface PumpYourselfApi {
     @POST("groups/editgroup")
     fun editGroup(@Body group: EditGroupRequest): Deferred<Unit>
 
+    @GET("profile/getprofileinfo")
+    fun getProfileInfo(
+        @Query("user_id") userId: Int
+    ) : Deferred<ProfileGetUserResponse>
+
     @POST("groups/invitefriendintogroup")
     fun inviteFriendIntoGroup(@Body inviting: InviteFriendInGroupRequest): Deferred<Unit>
 
