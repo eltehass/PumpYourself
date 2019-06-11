@@ -17,7 +17,7 @@ class FriendProfileController : BaseController<LayoutFriendProfileBinding>() {
 
     override fun initController() {
 
-        val itemFriend = arguments?.get("item_friend") as ItemFriend? ?: ItemFriend("","")
+        val itemFriend = arguments?.get("item_friend") as ItemFriend? ?: ItemFriend("","", "")
 
         binding.tvName.text = itemFriend.name
         binding.tvStatus.text = itemFriend.status

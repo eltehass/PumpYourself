@@ -1,6 +1,7 @@
 package leo.com.pumpyourself.network
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MealResponse(
     @SerializedName("User_dish_ID") val userDishId: Int,
@@ -21,3 +22,30 @@ data class MealRequest(
     @SerializedName("name") val name: String,
     @SerializedName("weight") val weight: Int
 )
+
+data class ProfileGetUserResponse(
+    @SerializedName("User_name") val userName: String,
+    @SerializedName("User_status") val userStatus: String,
+    @SerializedName("Friends_requests") val friendsRequests: List<FriendsRequest>,
+    @SerializedName("Groups_requests") val groupsRequests: List<GroupsRequest>,
+    @SerializedName("Friends") val friends: List<Friend>
+) : Serializable
+
+data class FriendsRequest(
+    @SerializedName("Friend_ID") val friendId: String,
+    @SerializedName("User_name") val userName: String,
+    @SerializedName("User_status") val userStatus: String
+) : Serializable
+
+data class GroupsRequest(
+    @SerializedName("Group_ID") val groupId: String,
+    @SerializedName("Group_name") val groupName: String,
+    @SerializedName("Group_description") val groupDescription: String
+) : Serializable
+
+data class Friend(
+    @SerializedName("Friend_ID") val friendId: String,
+    @SerializedName("User_name") val userName: String,
+    @SerializedName("User_status") val userStatus: String
+) : Serializable
+

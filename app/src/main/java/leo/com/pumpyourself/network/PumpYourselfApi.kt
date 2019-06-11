@@ -17,6 +17,9 @@ interface PumpYourselfApi {
     @POST("meal/addeating")
     fun addEating(@Body meal: MealRequest): Deferred<Int>
 
-
+    @GET("profile/getprofileinfo")
+    fun getProfileInfo(
+        @Query("user_id") userId: Int
+    ) : Deferred<ProfileGetUserResponse>
 }
 

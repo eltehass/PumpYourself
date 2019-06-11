@@ -14,6 +14,10 @@ import leo.com.pumpyourself.controllers.profile.extras.ItemFriend
 import leo.com.pumpyourself.controllers.profile.extras.ItemGroup
 import leo.com.pumpyourself.databinding.DialogLogOutBinding
 import leo.com.pumpyourself.databinding.LayoutProfileBinding
+import leo.com.pumpyourself.network.Friend
+import leo.com.pumpyourself.network.FriendsRequest
+import leo.com.pumpyourself.network.GroupsRequest
+import leo.com.pumpyourself.network.PumpYourSelfService
 
 class ProfileController : BaseController<LayoutProfileBinding>() {
 
@@ -66,49 +70,46 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
 
   override fun initController() {
 
-    // TODO: Get profile info from server
+    // TODO: Get user id
+      val userId = 1
 
-    val profileName = "Ser Samuel"
-    val profileStatus = "I am the best"
+      asyncSafe {
 
-    val friends = listOf (
-      ItemFriend("Peter Jackson", "Peter's status"),
-      ItemFriend("Michael Swidler", "My status"),
-      ItemFriend("Simon Black", "Keep calm")
-    )
+          val networkResult = PumpYourSelfService.service.getProfileInfo(userId).await()
 
-    val friendsRequests = listOf (
-      ItemFriend("Mike Lasker", "Number one"),
-      ItemFriend("Amani Sew", "I am here")
-    )
+          // Setting the profile info
+          binding.tvName.text = networkResult.userName
+          binding.tvStatus.text = networkResult.userStatus
+          binding.tvFriendsNumber.text = networkResult.friends.size.toString()
 
-    val groupsRequests = listOf (
-      ItemGroup("Group of four", "Group for morning run"),
-      ItemGroup("Left group", "Boring group")
-    )
+          // Setting the button listeners
+          binding.cvContainerFriends.setOnClickListener {
 
-    // Setting the profile info
-    binding.tvName.text = profileName
-    binding.tvStatus.text = profileStatus
-    binding.tvFriendsNumber.text = friends.size.toString()
+              val friendController = ProfileFriendsController()
 
-    // Setting the button listeners
-    binding.exitIcon.setOnClickListener { logOutDialog.show() }
-    binding.tvName.setOnClickListener { infoDialog.show() }
-    binding.tvStatus.setOnClickListener { infoDialog.show() }
+              val bundle = Bundle()
+              bundle.putSerializable("friends", networkResult)
+              friendController.arguments = bundle
 
-    binding.cvContainerFriends.setOnClickListener {
+              show(TAB_PROFILE, friendController)
+          }
 
-      val friendController = ProfileFriendsController()
+          binding.cvContainerNotifications.setOnClickListener {
 
-//      val bundle = Bundle()
-//      bundle.putParcelableArrayList("friends", friends)
-//      friendController.arguments = bundle
+              val notificationsController = ProfileNotificationsController()
 
-      show(TAB_PROFILE, friendController)
-    }
+              val bundle = Bundle()
+              bundle.putSerializable("notifications", networkResult)
+              notificationsController.arguments = bundle
 
-    binding.cvContainerNotifications.setOnClickListener { show(TAB_PROFILE, ProfileNotificationsController()) }
+              show(TAB_PROFILE, ProfileNotificationsController())
+          }
+      }
+
+      // Setting the dialogues
+      binding.exitIcon.setOnClickListener { logOutDialog.show() }
+      binding.tvName.setOnClickListener { infoDialog.show() }
+      binding.tvStatus.setOnClickListener { infoDialog.show() }
   }
 
   override fun getLayoutId(): Int = R.layout.layout_profile

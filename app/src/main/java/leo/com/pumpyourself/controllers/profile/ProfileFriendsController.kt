@@ -9,6 +9,9 @@ import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.controllers.profile.extras.FriendsAdapter
 import leo.com.pumpyourself.controllers.profile.extras.ItemFriend
 import leo.com.pumpyourself.databinding.LayoutProfileFriendsBinding
+import leo.com.pumpyourself.network.FriendsRequest
+import leo.com.pumpyourself.network.GroupsRequest
+import leo.com.pumpyourself.network.ProfileGetUserResponse
 
 class ProfileFriendsController : BaseController<LayoutProfileFriendsBinding>(),
     LazyAdapter.OnItemClickListener<ItemFriend> {
@@ -21,13 +24,11 @@ class ProfileFriendsController : BaseController<LayoutProfileFriendsBinding>(),
 
     override fun initController() {
 
-        val dataList = listOf (
-            ItemFriend("Peter Jackson", "Peter's status"),
-            ItemFriend("Michael Swidler", "My status"),
-            ItemFriend("Simon Black", "Keep calm")
-        )
+        val friends = (arguments?.get("friends") as ProfileGetUserResponse? ?:
+            ProfileGetUserResponse("", "", listOf(), listOf(), listOf())).friends
 
-        binding.rvContainer.initWithLinLay(LinearLayout.VERTICAL, FriendsAdapter(this), dataList)
+        binding.rvContainer.initWithLinLay(LinearLayout.VERTICAL, FriendsAdapter(this),
+            friends.map { item -> ItemFriend(item.userName, item.userStatus, "") })
         binding.fabAction.setOnClickListener { show(TAB_PROFILE, ProfileAddFriendController()) }
     }
 
