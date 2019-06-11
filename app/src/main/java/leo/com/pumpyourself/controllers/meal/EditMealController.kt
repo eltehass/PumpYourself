@@ -9,12 +9,13 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import leo.com.pumpyourself.R
-import leo.com.pumpyourself.common.*
+import leo.com.pumpyourself.common.Constants
+import leo.com.pumpyourself.common.ImageGalleryEvent
+import leo.com.pumpyourself.common.setCircleImgResource
+import leo.com.pumpyourself.common.setCircleImgUrl
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.databinding.LayoutEditMealBinding
-import leo.com.pumpyourself.network.PumpYourSelfService
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -63,13 +64,13 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
                 ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),2121)
             }
         } else {
-            val base64 = encodeToBase64(event.uri, context!!)
-            val addMealObj = AddMealRequest(5, "2019-06-09T201546", "efasfs", 232, base64, 123, 123, 213, 123)
+            //val base64 = encodeToBase64(event.uri, context!!)
+            //val addMealObj = AddEatingRequest(5, "2019-06-09T201546", "efasfs", 232, base64, 123, 123, 213, 123)
 
-            asyncSafe {
-                val res = PumpYourSelfService.service.addEating(addMealObj).await()
-                Log.e("EditMealController", "Result: $res")
-            }
+//            asyncSafe {
+//                val res = PumpYourSelfService.service.addEating(addMealObj).await()
+//                Log.e("EditMealController", "Result: $res")
+//            }
         }
     }
 

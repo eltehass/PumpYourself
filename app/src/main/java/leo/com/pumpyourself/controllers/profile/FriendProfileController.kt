@@ -3,6 +3,7 @@ package leo.com.pumpyourself.controllers.profile
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.profile.extras.ItemFriend
+import leo.com.pumpyourself.databinding.LayoutFriendProfileBinding
 
 class FriendProfileController : BaseController<LayoutFriendProfileBinding>() {
 

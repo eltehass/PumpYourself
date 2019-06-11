@@ -2,6 +2,7 @@ package leo.com.pumpyourself.controllers.profile
 
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
+import leo.com.pumpyourself.databinding.LayoutProfileAddFriendBinding
 
 class ProfileAddFriendController : BaseController<LayoutProfileAddFriendBinding>() {
 
