@@ -159,8 +159,8 @@ data class ProfileFriendInfo(
 
 data class UserInfo(
     @SerializedName("User_ID") val userId: Int,
-    @SerializedName("Name") val userName: String,
-    @SerializedName("Status") val userStatus: String
+    @SerializedName("User_name") val userName: String,
+    @SerializedName("User_status") val userStatus: String
 ) : Serializable
 
 data class ChangeUserInfo(
