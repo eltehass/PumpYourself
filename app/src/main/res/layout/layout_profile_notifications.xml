@@ -18,7 +18,7 @@
             android:textColor="#364E80"
             android:textSize="20sp"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Group requests"
+            android:text="Group requests"
             app:layout_constraintStart_toStartOf="parent"/>
 
 
@@ -41,7 +41,7 @@
             android:layout_marginStart="16dp"
             android:textColor="#364E80"
             android:textSize="20sp"
-            tools:text="Friends requests" app:layout_constraintStart_toStartOf="parent"
+            android:text="Friends requests" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_container_groups" android:layout_marginTop="16dp"/>
 
     <android.support.v7.widget.RecyclerView

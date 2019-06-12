@@ -11,8 +11,16 @@ data class ItemFriend(
 ) : Serializable
 
 data class ItemGroup(
+    val userId: Int,
+    val groupId: Int,
     val name: String,
     val description: String,
+    val imgUrl : String
+) : Serializable
+
+data class ItemAddFriend(
+    val friendId: Int,
+    val name: String,
     val imgUrl : String
 ) : Serializable
 

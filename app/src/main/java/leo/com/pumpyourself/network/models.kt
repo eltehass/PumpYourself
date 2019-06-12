@@ -152,3 +152,30 @@ data class Friend(
     @SerializedName("User_status") val userStatus: String
 ) : Serializable
 
+data class ProfileFriendInfo(
+    @SerializedName("Friends") val friends: List<Friend>,
+    @SerializedName("Mutual_groups") val mutualGroups: List<UserGroupResponse>
+) : Serializable
+
+data class UserInfo(
+    @SerializedName("User_ID") val userId: Int,
+    @SerializedName("Name") val userName: String,
+    @SerializedName("Status") val userStatus: String
+) : Serializable
+
+data class ChangeUserInfo(
+    @SerializedName("user_id") val userId: Int,
+    @SerializedName("name") val userName: String,
+    @SerializedName("status") val userStatus: String
+) : Serializable
+
+data class ProcessGroupRequest(
+    @SerializedName("user_id") val userId: Int,
+    @SerializedName("group_id") val groupId: Int
+) : Serializable
+
+data class ProcessFriendRequest(
+    @SerializedName("user_id") val userId: Int,
+    @SerializedName("friend_id") val userName: Int
+) : Serializable
+

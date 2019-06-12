@@ -6,11 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import leo.com.pumpyourself.R
+import leo.com.pumpyourself.common.setCircleImgUrl
+import leo.com.pumpyourself.common.setImgUrl
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.databinding.LayoutProfileBinding
+import leo.com.pumpyourself.network.ChangeUserInfo
 import leo.com.pumpyourself.network.PumpYourSelfService
 
 class ProfileController : BaseController<LayoutProfileBinding>() {
@@ -21,6 +25,9 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
   private lateinit var infoDialog: AlertDialog
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+    // TODO: Get user ID
+    val userId = 1
 
     val view = super.onCreateView(inflater, container, savedInstanceState)
 
@@ -43,16 +50,26 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
     val infoDialogView = inflater.inflate(R.layout.dialog_profile_info, null)
     val infoDialogName = infoDialogView.findViewById<EditText>(R.id.et_name)
     val infoDialogStatus = infoDialogView.findViewById<EditText>(R.id.et_status)
+    val infoDialogImage = infoDialogView.findViewById<ImageView>(R.id.iv_icon)
+
+    infoDialogName.setText(binding.tvName.text.toString())
+    infoDialogStatus.setText(binding.tvStatus.text.toString())
+    infoDialogImage.setCircleImgUrl("http://upe.pl.ua:8080/images/users?image_id=$userId")
 
     infoDialogView.findViewById<TextView>(R.id.tv_cancel).setOnClickListener { infoDialog.dismiss() }
     infoDialogView.findViewById<TextView>(R.id.tv_save).setOnClickListener {
       if (infoDialogName.text.toString().isEmpty() || infoDialogStatus.text.toString().isEmpty()) {
         Toast.makeText(it.context, "Empty field", Toast.LENGTH_LONG).show()
       } else {
-        binding.tvName.text = infoDialogName.text.toString()
-        binding.tvStatus.text = infoDialogStatus.text.toString()
+          asyncSafe {
+              PumpYourSelfService.service.changeProfileInfo(ChangeUserInfo(
+                  userId, infoDialogName.text.toString(), infoDialogStatus.text.toString()))
 
-        infoDialog.dismiss()
+              binding.tvName.text = infoDialogName.text.toString()
+              binding.tvStatus.text = infoDialogStatus.text.toString()
+
+              infoDialog.dismiss()
+          }
       }
     }
 
@@ -74,6 +91,7 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
           // Setting the profile info
           binding.tvName.text = networkResult.userName
           binding.tvStatus.text = networkResult.userStatus
+          binding.imageView.setImgUrl("http://upe.pl.ua:8080/images/users?image_id=$userId")
           binding.tvFriendsNumber.text = networkResult.friends.size.toString()
 
           // Setting the button listeners
@@ -83,7 +101,7 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
 
               val bundle = Bundle()
               bundle.putSerializable("user_id", userId)
-              bundle.putSerializable("friends", networkResult)
+              bundle.putSerializable("friends", networkResult.friends.toTypedArray())
               friendController.arguments = bundle
 
               show(TAB_PROFILE, friendController)
@@ -94,10 +112,12 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
               val notificationsController = ProfileNotificationsController()
 
               val bundle = Bundle()
-              bundle.putSerializable("notifications", networkResult)
+              bundle.putSerializable("user_id", userId)
+              bundle.putSerializable("friends_requests", networkResult.friendsRequests.toTypedArray())
+              bundle.putSerializable("groups_requests", networkResult.groupsRequests.toTypedArray())
               notificationsController.arguments = bundle
 
-              show(TAB_PROFILE, ProfileNotificationsController())
+              show(TAB_PROFILE, notificationsController)
           }
       }
 

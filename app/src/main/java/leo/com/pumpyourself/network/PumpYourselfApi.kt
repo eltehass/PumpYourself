@@ -55,15 +55,44 @@ interface PumpYourselfApi {
     @POST("groups/editgroup")
     fun editGroup(@Body group: EditGroupRequest): Deferred<Unit>
 
-    @GET("profile/getprofileinfo")
-    fun getProfileInfo(
-        @Query("user_id") userId: Int
-    ) : Deferred<ProfileGetUserResponse>
-
     @POST("groups/invitefriendintogroup")
     fun inviteFriendIntoGroup(@Body inviting: InviteFriendInGroupRequest): Deferred<Unit>
 
     @POST("groups/leavethegroup")
     fun leaveTheGroup(@Body leaveGroupRequest: LeaveGroupRequest): Deferred<Unit>
 
+    /** Profile **/
+    @GET("profile/getprofileinfo")
+    fun getProfileInfo(
+        @Query("user_id") userId: Int
+    ) : Deferred<ProfileGetUserResponse>
+
+    @GET("profile/getfriendinfo")
+    fun getFriendInfo(
+        @Query("user_id") userId: Int,
+        @Query("friend_id") friendId: Int
+    ) : Deferred<ProfileFriendInfo>
+
+    @GET("profile/searchuser")
+    fun searchUsers(
+        @Query("phrase") phrase: String
+    ) : Deferred<List<UserInfo>>
+
+    @POST("profile/changeprofileinfo")
+    fun changeProfileInfo(@Body changeUserInfo: ChangeUserInfo): Deferred<Unit>
+
+    @POST("profile/sendfriendrequest")
+    fun sendFriendRequest(@Body friendRequest: ProcessFriendRequest): Deferred<Unit>
+
+    @POST("profile/acceptgrouprequest")
+    fun acceptGroupRequest(@Body groupRequest: ProcessGroupRequest): Deferred<Unit>
+
+    @POST("profile/declinegrouprequest")
+    fun declineGroupRequest(@Body groupRequest: ProcessGroupRequest): Deferred<Unit>
+
+    @POST("profile/acceptfriendrequest")
+    fun acceptFriendRequest(@Body friendRequest: ProcessFriendRequest): Deferred<Unit>
+
+    @POST("profile/declinefriendrequest")
+    fun declineFriendRequest(@Body friendRequest: ProcessFriendRequest): Deferred<Unit>
 }
