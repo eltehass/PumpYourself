@@ -88,6 +88,7 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
               val friendController = ProfileFriendsController()
 
               val bundle = Bundle()
+              bundle.putSerializable("user_id", userId)
               bundle.putSerializable("friends", networkResult)
               friendController.arguments = bundle
 
