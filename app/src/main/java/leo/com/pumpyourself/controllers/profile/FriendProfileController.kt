@@ -1,9 +1,7 @@
 package leo.com.pumpyourself.controllers.profile
 
-import android.widget.LinearLayout
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
-import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.controllers.profile.extras.ItemFriend
 import leo.com.pumpyourself.databinding.LayoutFriendProfileBinding
 import leo.com.pumpyourself.network.PumpYourSelfService

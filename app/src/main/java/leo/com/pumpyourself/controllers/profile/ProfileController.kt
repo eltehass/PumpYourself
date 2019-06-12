@@ -10,13 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
-import leo.com.pumpyourself.controllers.profile.extras.ItemFriend
-import leo.com.pumpyourself.controllers.profile.extras.ItemGroup
-import leo.com.pumpyourself.databinding.DialogLogOutBinding
 import leo.com.pumpyourself.databinding.LayoutProfileBinding
-import leo.com.pumpyourself.network.Friend
-import leo.com.pumpyourself.network.FriendsRequest
-import leo.com.pumpyourself.network.GroupsRequest
 import leo.com.pumpyourself.network.PumpYourSelfService
 
 class ProfileController : BaseController<LayoutProfileBinding>() {

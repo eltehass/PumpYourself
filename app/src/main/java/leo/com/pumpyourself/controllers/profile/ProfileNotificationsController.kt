@@ -6,7 +6,8 @@ import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
-import leo.com.pumpyourself.controllers.profile.extras.*
+import leo.com.pumpyourself.controllers.profile.extras.GroupsRequestsAdapter
+import leo.com.pumpyourself.controllers.profile.extras.ItemGroup
 import leo.com.pumpyourself.databinding.LayoutProfileNotificationsBinding
 import leo.com.pumpyourself.network.ProfileGetUserResponse
 

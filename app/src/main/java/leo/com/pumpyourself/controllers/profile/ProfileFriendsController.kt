@@ -10,8 +10,6 @@ import leo.com.pumpyourself.controllers.profile.extras.FriendsAdapter
 import leo.com.pumpyourself.controllers.profile.extras.ItemFriend
 import leo.com.pumpyourself.controllers.profile.extras.ItemGroup
 import leo.com.pumpyourself.databinding.LayoutProfileFriendsBinding
-import leo.com.pumpyourself.network.FriendsRequest
-import leo.com.pumpyourself.network.GroupsRequest
 import leo.com.pumpyourself.network.ProfileGetUserResponse
 
 class ProfileFriendsController : BaseController<LayoutProfileFriendsBinding>(),

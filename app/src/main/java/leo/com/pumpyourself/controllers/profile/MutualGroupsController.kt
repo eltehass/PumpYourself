@@ -1,11 +1,9 @@
 package leo.com.pumpyourself.controllers.profile
 
 import android.os.Bundle
-import android.widget.LinearLayout
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
-import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.controllers.groups.extras.ItemGroup
 import leo.com.pumpyourself.databinding.LayoutMutualGroupsBinding
 
