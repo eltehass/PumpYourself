@@ -10,8 +10,10 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import leo.com.pumpyourself.R
-import leo.com.pumpyourself.common.Constants
-import leo.com.pumpyourself.common.ImageGalleryEvent
+import leo.com.pumpyourself.common.CameraEvent
+import leo.com.pumpyourself.common.Constants.CAMERA_REQUEST
+import leo.com.pumpyourself.common.Constants.MY_CAMERA_PERMISSION_CODE
+import leo.com.pumpyourself.common.setCircleImgBitmap
 import leo.com.pumpyourself.common.setCircleImgResource
 import leo.com.pumpyourself.common.setCircleImgUrl
 import leo.com.pumpyourself.controllers.base.BaseController
@@ -37,12 +39,12 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
         }
 
         binding.ivMealIcon.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK).apply {
-                type = "image/*"
-                putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png"))
+            if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.CAMERA), MY_CAMERA_PERMISSION_CODE)
+            } else {
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(cameraIntent, CAMERA_REQUEST)
             }
-
-            startActivityForResult(intent, Constants.GALLERY_REQUEST_CODE)
         }
 
     }
@@ -56,23 +58,30 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
     }
 
     @Subscribe
-    fun onImageGalleryEvent(event: ImageGalleryEvent) {
-        binding.ivMealIcon.setImageURI(event.uri)
-
-        if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),2121)
-            }
-        } else {
-            //val base64 = encodeToBase64(event.uri, context!!)
-            //val addMealObj = AddEatingRequest(5, "2019-06-09T201546", "efasfs", 232, base64, 123, 123, 213, 123)
-
-//            asyncSafe {
-//                val res = PumpYourSelfService.service.addEating(addMealObj).await()
-//                Log.e("EditMealController", "Result: $res")
-//            }
-        }
+    fun onCameraEvent(event: CameraEvent) {
+        binding.ivMealIcon.setCircleImgBitmap(event.bitmap)
     }
+
+//    @Subscribe
+//    fun onImageGalleryEvent(event: ImageGalleryEvent) {
+//        Log.e("aaaa", event.uri.toString())
+//
+//        binding.ivMealIcon.setImageURI(event.uri)
+//
+//        if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            if (!ActivityCompat.shouldShowRequestPermissionRationale(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//                ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),2121)
+//            }
+//        } else {
+//            //val base64 = encodeToBase64(event.uri, context!!)
+//            //val addMealObj = AddEatingRequest(5, "2019-06-09T201546", "efasfs", 232, base64, 123, 123, 213, 123)
+//
+////            asyncSafe {
+////                val res = PumpYourSelfService.service.addEating(addMealObj).await()
+////                Log.e("EditMealController", "Result: $res")
+////            }
+//        }
+//    }
 
     fun getPath(uri: Uri): String? {
         val projection = arrayOf(MediaStore.Images.Media.DATA)

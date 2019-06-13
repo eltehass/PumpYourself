@@ -1,5 +1,6 @@
 package leo.com.pumpyourself.common
 
+import android.graphics.Bitmap
 import android.widget.ImageView
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
@@ -14,6 +15,13 @@ import com.bumptech.glide.request.RequestOptions
 fun ImageView.setCircleImgUrl(imgUrl: String) {
     Glide.with(context)
         .load(imgUrl)
+        .apply(RequestOptions.circleCropTransform())
+        .into(this)
+}
+
+fun ImageView.setCircleImgBitmap(bitmap: Bitmap) {
+    Glide.with(context)
+        .load(bitmap)
         .apply(RequestOptions.circleCropTransform())
         .into(this)
 }

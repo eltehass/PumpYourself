@@ -2,13 +2,18 @@ package leo.com.pumpyourself
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import leo.com.pumpyourself.common.ImageGalleryEvent
+import leo.com.pumpyourself.common.CameraEvent
+import leo.com.pumpyourself.common.Constants.CAMERA_REQUEST
+import leo.com.pumpyourself.common.Constants.MY_CAMERA_PERMISSION_CODE
 import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_GROUPS
 import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_MEAL
 import leo.com.pumpyourself.controllers.base.BaseController.Companion.TAB_PROFILE
@@ -136,10 +141,24 @@ class MainActivity : AppCompatActivity() {
     supportActionBar?.setDisplayShowHomeEnabled(controllerStacks[currentControllerTabName]?.size!! != 1)
   }
 
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode === MY_CAMERA_PERMISSION_CODE) {
+      if (grantResults[0] === PackageManager.PERMISSION_GRANTED) {
+        Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show()
+        val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, CAMERA_REQUEST)
+      } else {
+        Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show()
+      }
+    }
+  }
+
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     if (resultCode != Activity.RESULT_OK) { return }
-    data?.data?.let { EventBus.getDefault().post(ImageGalleryEvent(it)) }
+    val photo = data?.extras?.get("data") as Bitmap
+    EventBus.getDefault().post(CameraEvent(photo))
   }
 
 }

@@ -16,3 +16,11 @@ fun encodeToBase64(uri: Uri, context: Context): String {
 
     return Base64.encodeToString(byteArray, Base64.DEFAULT)
 }
+
+fun encodeToBase64(bitmap: Bitmap, context: Context): String {
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+    val byteArray = byteArrayOutputStream.toByteArray()
+
+    return Base64.encodeToString(byteArray, Base64.DEFAULT)
+}
