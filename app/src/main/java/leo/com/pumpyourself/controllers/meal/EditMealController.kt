@@ -15,13 +15,18 @@ import leo.com.pumpyourself.common.ImageGalleryEvent
 import leo.com.pumpyourself.common.setCircleImgResource
 import leo.com.pumpyourself.common.setCircleImgUrl
 import leo.com.pumpyourself.controllers.base.BaseController
+import leo.com.pumpyourself.controllers.meal.extras.ItemMeal
 import leo.com.pumpyourself.databinding.LayoutEditMealBinding
+import leo.com.pumpyourself.network.EditEatingRequest
+import leo.com.pumpyourself.network.PumpYourSelfService
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class EditMealController : BaseController<LayoutEditMealBinding>() {
@@ -30,8 +35,19 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
 
     override fun initController() {
 
-        if ("".isNotEmpty()) {
-            binding.ivMealIcon.setCircleImgUrl("")
+        val userId = arguments?.get("user_id") as Int? ?: 1
+        val itemMeal = arguments?.get("item_meal") as ItemMeal? ?: ItemMeal(
+            0, "", 0.0, "", 0.0, 0.0, 0.0, 0.0)
+
+        binding.etFoodName.setText(itemMeal.name)
+        binding.etWeight.setText(itemMeal.weight.toString())
+        binding.etProteins.setText(itemMeal.proteins.toString())
+        binding.etFats.setText(itemMeal.fats.toString())
+        binding.etCarb.setText(itemMeal.carbs.toString())
+        binding.etCal.setText(itemMeal.calories.toString())
+
+        if (itemMeal.imgUrl.isNotEmpty()) {
+            binding.ivMealIcon.setCircleImgUrl(itemMeal.imgUrl)
         } else {
             binding.ivMealIcon.setCircleImgResource(R.drawable.ic_launcher_background)
         }
@@ -45,6 +61,19 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
             startActivityForResult(intent, Constants.GALLERY_REQUEST_CODE)
         }
 
+        binding.tvSaveMeal.setOnClickListener {
+
+            val currDate = Calendar.getInstance()
+            val currDateStr = SimpleDateFormat("yyyy-MM-ddTHHmmss", Locale.ENGLISH).format(currDate.time)
+
+            asyncSafe {
+                PumpYourSelfService.service.editEating(EditEatingRequest(userId, itemMeal.userDishId,
+                    currDateStr, itemMeal.name, itemMeal.weight, null, itemMeal.proteins,
+                    itemMeal.fats, itemMeal.carbs, itemMeal.calories))
+
+                show(TAB_MEAL, MealController())
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

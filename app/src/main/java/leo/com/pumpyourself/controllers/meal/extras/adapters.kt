@@ -25,7 +25,7 @@ class MealAdapter(onClick: OnItemClickListener<ItemMeal>?) : LazyAdapter<ItemMea
 
     override fun bindData(data: ItemMeal, binding: ItemMealBinding) {
         binding.tvName.text = data.name
-        binding.tvValue.text = data.value
+        binding.tvValue.text = data.weight.toString()
         binding.cvContainer.setOnClickListener { itemClickListener?.onLazyItemClick(data) }
 
         if (data.imgUrl.isNotEmpty()) {

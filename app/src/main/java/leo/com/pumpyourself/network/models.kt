@@ -6,7 +6,7 @@ import java.io.Serializable
 data class FoodResponse(
     @SerializedName("User_dish_ID")     val userDishId: Int,
     @SerializedName("Dish_ID")          val dishId: Int,
-    @SerializedName("Weight")           val weight: Int,
+    @SerializedName("Weight")           val weight: Double,
     @SerializedName("Eating_date")      val eatingDate: String,
     @SerializedName("Photo_ID")         val photoId: String,
     @SerializedName("Dish_name")        val dishName: String,
@@ -20,12 +20,12 @@ data class AddEatingRequest(
     @SerializedName("user_id")          val userId: Int,
     @SerializedName("date")             val date: String,
     @SerializedName("name")             val name: String,
-    @SerializedName("weight")           val weight: Int,
+    @SerializedName("weight")           val weight: Double,
     @SerializedName("photo")            val photo: String,
-    @SerializedName("proteins")         val proteins: Int,
-    @SerializedName("fats")             val fats: Int,
-    @SerializedName("carbohydrates")    val carbohydrates: Int,
-    @SerializedName("calories")         val calories: Int
+    @SerializedName("proteins")         val proteins: Double,
+    @SerializedName("fats")             val fats: Double,
+    @SerializedName("carbohydrates")    val carbohydrates: Double,
+    @SerializedName("calories")         val calories: Double
 ): Serializable
 
 data class EditEatingRequest(
@@ -33,12 +33,12 @@ data class EditEatingRequest(
     @SerializedName("user_dish_id")     val userDishId: Int,
     @SerializedName("date")             val date: String,
     @SerializedName("name")             val name: String,
-    @SerializedName("weight")           val weight: Int,
-    @SerializedName("photo")            val photo: String,
-    @SerializedName("proteins")         val proteins: Int,
-    @SerializedName("fats")             val fats: Int,
-    @SerializedName("carbohydrates")    val carbohydrates: Int,
-    @SerializedName("calories")         val calories: Int
+    @SerializedName("weight")           val weight: Double,
+    @SerializedName("photo")            val photo: String?,
+    @SerializedName("proteins")         val proteins: Double,
+    @SerializedName("fats")             val fats: Double,
+    @SerializedName("carbohydrates")    val carbohydrates: Double,
+    @SerializedName("calories")         val calories: Double
 ): Serializable
 
 data class UserTrainingResponse(

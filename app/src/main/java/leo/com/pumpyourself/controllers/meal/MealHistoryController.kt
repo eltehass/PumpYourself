@@ -14,21 +14,21 @@ class MealHistoryController : BaseController<LayoutMealHistoryBinding>() {
     override lateinit var binding: LayoutMealHistoryBinding
 
     override fun initController() {
-        val meals = listOf(
-                ItemMeal("Buckwheat","110 g",""),
-                ItemMeal("Buckwheat","110 g",""),
-                ItemMeal("Buckwheat","110 g",""),
-                ItemMeal("Buckwheat","110 g","")
-        )
-
-        val mealHistories = listOf(
-                ItemMealHistory("Meal for 07.04.2019", meals),
-                ItemMealHistory("Meal for 07.04.2019", meals),
-                ItemMealHistory("Meal for 07.04.2019", meals),
-                ItemMealHistory("Meal for 07.04.2019", meals)
-        )
-
-        binding.rvMealHistories.initWithLinLay(LinearLayoutManager.VERTICAL, MealHistoryAdapter(), mealHistories)
+//        val meals = listOf(
+//                ItemMeal("Buckwheat","110 g",""),
+//                ItemMeal("Buckwheat","110 g",""),
+//                ItemMeal("Buckwheat","110 g",""),
+//                ItemMeal("Buckwheat","110 g","")
+//        )
+//
+//        val mealHistories = listOf(
+//                ItemMealHistory("Meal for 07.04.2019", meals),
+//                ItemMealHistory("Meal for 07.04.2019", meals),
+//                ItemMealHistory("Meal for 07.04.2019", meals),
+//                ItemMealHistory("Meal for 07.04.2019", meals)
+//        )
+//
+//        binding.rvMealHistories.initWithLinLay(LinearLayoutManager.VERTICAL, MealHistoryAdapter(), mealHistories)
     }
 
     override fun getLayoutId(): Int = R.layout.layout_meal_history

@@ -1,6 +1,7 @@
 package leo.com.pumpyourself.controllers.meal
 
 import android.app.DatePickerDialog
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.common.initWithValues
@@ -13,6 +14,7 @@ import leo.com.pumpyourself.controllers.meal.extras.ItemMealUnit
 import leo.com.pumpyourself.controllers.meal.extras.MealAdapter
 import leo.com.pumpyourself.controllers.meal.extras.MealUnitAdapter
 import leo.com.pumpyourself.databinding.LayoutMealBinding
+import leo.com.pumpyourself.network.PumpYourSelfService
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,30 +26,57 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
   var month: Int = -1
   var day: Int = -1
 
+  // TODO: Get user id
+  var userId = 1
+
   override fun initController() {
-      val mealUnits = listOf(
-        ItemMealUnit("Proteins","240 g"),
-        ItemMealUnit("Fats","175 g"),
-        ItemMealUnit("Carbs","320 g"),
-        ItemMealUnit("Calories","615 kcal")
-      )
 
-      val meals = listOf(
-        ItemMeal("Buckwheat","110 g",""),
-        ItemMeal("Buckwheat","110 g",""),
-        ItemMeal("Buckwheat","110 g",""),
-        ItemMeal("Buckwheat","110 g","")
-      )
+      val controllerThis = this
 
-      binding.tvAddMeal.setOnClickListener { show(TAB_MEAL, AddMealController()) }
-      binding.tvShowHistory.setOnClickListener { show(TAB_MEAL, MealHistoryController()) }
+      val currDate = Calendar.getInstance()
+      val currDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(currDate.time)
+      val currDateFormatted = SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).format(currDate.time)
 
-      binding.tvCalendarDate.text = "April 7, 2017"
-      binding.acvChart.initWithValues(145, 30, 95, 60,"Consumed stuff")
-      binding.rvMealUnits.initWithGridLay(2, MealUnitAdapter(), mealUnits)
-      binding.rvMeals.initWithLinLay(LinearLayoutManager.VERTICAL, MealAdapter(this), meals)
+      currDate.add(Calendar.DAY_OF_MONTH, 1)
+      val tomorrowDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(currDate.time)
 
-      binding.cv2.setOnClickListener { show(TAB_MEAL, MealStatisticsController()) }
+      asyncSafe {
+
+          val networkResult = PumpYourSelfService.service.getAllFood(
+              userId, currDateStr, tomorrowDateStr).await()
+
+          var proteins = 0.0
+          var fats = 0.0
+          var carbs = 0.0
+          var calories = 0.0
+
+          networkResult.forEach {
+              proteins += it.proteins
+              fats += it.fats
+              carbs += it.carbohydrates
+              calories += it.calories
+          }
+
+          val mealUnits = listOf(
+              ItemMealUnit("Proteins", "$proteins g"),
+              ItemMealUnit("Fats","$fats g"),
+              ItemMealUnit("Carbs","$carbs g"),
+              ItemMealUnit("Calories","$calories kcal")
+          )
+
+          val meals = networkResult.map { ItemMeal(it.userDishId, it.dishName, it.weight,
+              "http://upe.pl.ua:8080/images/dishes?image_id=${it.photoId}",
+              it.proteins, it.fats, it.carbohydrates, it.calories) }
+
+          binding.acvChart.initWithValues(proteins.toInt(), fats.toInt(),
+              carbs.toInt(), calories.toInt(),"Consumed stuff")
+          binding.rvMealUnits.initWithGridLay(2, MealUnitAdapter(), mealUnits)
+          binding.rvMeals.initWithLinLay(LinearLayoutManager.VERTICAL, MealAdapter(controllerThis), meals)
+
+
+      }
+
+      //binding.cv2.setOnClickListener { show(TAB_MEAL, MealStatisticsController()) }
 
       binding.ivCalendar.setOnClickListener {
           if (year == -1) {
@@ -69,9 +98,20 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
 
           datePickerDialog.show()
       }
+
+      binding.tvAddMeal.setOnClickListener { show(TAB_MEAL, AddMealController()) }
+      binding.tvShowHistory.setOnClickListener { show(TAB_MEAL, MealHistoryController()) }
+
+      binding.tvCalendarDate.text = currDateFormatted
   }
 
   override fun onLazyItemClick(data: ItemMeal) {
+      val editMealController = EditMealController()
+      val bundle = Bundle()
+      bundle.putSerializable("user_id", userId)
+      bundle.putSerializable("item_meal", data)
+      editMealController.arguments = bundle
+
       show(TAB_MEAL, EditMealController())
   }
 
