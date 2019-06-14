@@ -21,7 +21,7 @@ data class AddEatingRequest(
     @SerializedName("date")             val date: String,
     @SerializedName("name")             val name: String,
     @SerializedName("weight")           val weight: Double,
-    @SerializedName("photo")            val photo: String,
+    @SerializedName("photo")            val photo: String?,
     @SerializedName("proteins")         val proteins: Double,
     @SerializedName("fats")             val fats: Double,
     @SerializedName("carbohydrates")    val carbohydrates: Double,

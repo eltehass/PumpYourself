@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.widget.Toast
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.common.CameraEvent
 import leo.com.pumpyourself.common.Constants.CAMERA_REQUEST
@@ -39,7 +40,7 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
 
         val userId = arguments?.get("user_id") as Int? ?: 1
         val itemMeal = arguments?.get("item_meal") as ItemMeal? ?: ItemMeal(
-            0, "", 0.0, "", 0.0, 0.0, 0.0, 0.0)
+            0, "", 0.0, "", 1.0, 2.0, 3.0, 4.0)
 
         binding.etFoodName.setText(itemMeal.name)
         binding.etWeight.setText(itemMeal.weight.toString())
@@ -66,14 +67,25 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
         binding.tvSaveMeal.setOnClickListener {
 
             val currDate = Calendar.getInstance()
-            val currDateStr = SimpleDateFormat("yyyy-MM-ddTHHmmss", Locale.ENGLISH).format(currDate.time)
+            val currDateStr = SimpleDateFormat("yyyy-MM-dd'T'HHmmss", Locale.ENGLISH).format(currDate.time)
 
-            asyncSafe {
-                PumpYourSelfService.service.editEating(EditEatingRequest(userId, itemMeal.userDishId,
-                    currDateStr, itemMeal.name, itemMeal.weight, null, itemMeal.proteins,
-                    itemMeal.fats, itemMeal.carbs, itemMeal.calories))
+            try {
+                val weight = binding.etWeight.text.toString().toDouble()
+                val proteins = binding.etProteins.text.toString().toDouble()
+                val fats = binding.etFats.text.toString().toDouble()
+                val carbs = binding.etCarb.text.toString().toDouble()
+                val calories = binding.etCal.text.toString().toDouble()
 
-                show(TAB_MEAL, MealController())
+                asyncSafe {
+                    PumpYourSelfService.service.editEating(EditEatingRequest(userId, itemMeal.userDishId,
+                        currDateStr, binding.etFoodName.text.toString(), weight, null, proteins, fats,
+                        carbs, calories)).await()
+
+                    mainActivity.onBackPressed()
+                }
+            }
+            catch (e : Exception) {
+                Toast.makeText(context, "Incorrect number", Toast.LENGTH_LONG).show()
             }
         }
     }

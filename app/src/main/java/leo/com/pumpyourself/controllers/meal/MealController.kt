@@ -99,8 +99,22 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
           datePickerDialog.show()
       }
 
-      binding.tvAddMeal.setOnClickListener { show(TAB_MEAL, AddMealController()) }
-      binding.tvShowHistory.setOnClickListener { show(TAB_MEAL, MealHistoryController()) }
+      binding.tvAddMeal.setOnClickListener {
+          val addMealController = AddMealController()
+          val bundle = Bundle()
+          bundle.putSerializable("user_id", userId)
+          addMealController.arguments = bundle
+
+          show(TAB_MEAL, addMealController)
+      }
+      binding.tvShowHistory.setOnClickListener {
+          val historyController = MealHistoryController()
+          val bundle = Bundle()
+          bundle.putSerializable("user_id", userId)
+          historyController.arguments = bundle
+
+          show(TAB_MEAL, historyController)
+      }
 
       binding.tvCalendarDate.text = currDateFormatted
   }
@@ -112,7 +126,7 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
       bundle.putSerializable("item_meal", data)
       editMealController.arguments = bundle
 
-      show(TAB_MEAL, EditMealController())
+      show(TAB_MEAL, editMealController)
   }
 
   override fun getLayoutId(): Int = R.layout.layout_meal
