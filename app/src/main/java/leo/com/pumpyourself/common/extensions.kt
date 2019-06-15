@@ -43,7 +43,6 @@ fun ImageView.setCircleImgResource(imgResource: Int) {
 
 fun AnyChartView.initWithValues(value1: Int, value2: Int, value3: Int, value4: Int, title: String) {
     val cartesian = AnyChart.column()
-
     val data = listOf(
             ValueDataEntry("Proteins", value1),
             ValueDataEntry("Fats", value2),
@@ -71,5 +70,7 @@ fun AnyChartView.initWithValues(value1: Int, value2: Int, value3: Int, value4: I
     cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
     cartesian.interactivity().hoverMode(HoverMode.BY_X)
 
+    cartesian.data(data)
     setChart(cartesian)
+    this.invalidate()
 }

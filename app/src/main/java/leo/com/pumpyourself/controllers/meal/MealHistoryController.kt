@@ -8,7 +8,6 @@ import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.controllers.meal.extras.ItemMeal
 import leo.com.pumpyourself.controllers.meal.extras.ItemMealHistory
-import leo.com.pumpyourself.controllers.meal.extras.MealAdapter
 import leo.com.pumpyourself.controllers.meal.extras.MealHistoryAdapter
 import leo.com.pumpyourself.databinding.LayoutMealHistoryBinding
 import leo.com.pumpyourself.network.PumpYourSelfService
@@ -54,23 +53,29 @@ class MealHistoryController : BaseController<LayoutMealHistoryBinding>() {
                 )
             }
 
-            /*val mealAdapter = MealHistoryAdapter(MealAdapter(
-                object : LazyAdapter.OnItemClickListener<ItemMeal> {
-                    override fun onLazyItemClick(data: ItemMeal) {
-                        val editMealController = EditMealController()
-                        val bundle = Bundle()
-                        bundle.putSerializable("user_id", userId)
-                        bundle.putSerializable("item_meal", data)
-                        editMealController.arguments = bundle
 
-                        show(TAB_MEAL, editMealController)
-                    }
+            val itemMealClickListener = object : LazyAdapter.OnItemClickListener<ItemMeal> {
+                override fun onLazyItemClick(data: ItemMeal) {
+                    onItemMealClick(data)
                 }
-            ))*/
+            }
 
-            binding.rvMealHistories.initWithLinLay(LinearLayoutManager.VERTICAL, MealHistoryAdapter(),
-                mealHistories.sortedByDescending { it.date } )
+            val mealHistoryAdapter = MealHistoryAdapter(itemMealClickListener)
+
+            binding.rvMealHistories.initWithLinLay(LinearLayoutManager.VERTICAL, mealHistoryAdapter, mealHistories.sortedByDescending { it.date } )
         }
+    }
+
+    private fun onItemMealClick(meal: ItemMeal) {
+        val editMealController = EditMealController()
+        val bundle = Bundle().apply {
+            putSerializable("user_id", userId)
+            putSerializable("item_meal", meal)
+        }
+
+        editMealController.arguments = bundle
+
+        show(TAB_MEAL, editMealController)
     }
 
     override fun getLayoutId(): Int = R.layout.layout_meal_history

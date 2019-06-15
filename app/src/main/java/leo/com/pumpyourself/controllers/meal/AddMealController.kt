@@ -1,11 +1,19 @@
 package leo.com.pumpyourself.controllers.meal
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.widget.Toast
 import leo.com.pumpyourself.R
+import leo.com.pumpyourself.common.CameraEvent
 import leo.com.pumpyourself.common.Constants
-import leo.com.pumpyourself.common.ImageGalleryEvent
+import leo.com.pumpyourself.common.encodeToBase64
+import leo.com.pumpyourself.common.setCircleImgBitmap
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.databinding.LayoutAddMealBinding
 import leo.com.pumpyourself.network.AddEatingRequest
@@ -18,18 +26,19 @@ import java.util.*
 class AddMealController : BaseController<LayoutAddMealBinding>() {
 
     override lateinit var binding: LayoutAddMealBinding
+    private var mealBitmap: Bitmap? = null
 
     override fun initController() {
 
         val userId = arguments?.get("user_id") as Int? ?: 1
 
         binding.ivMealIcon.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK).apply {
-                type = "image/*"
-                putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png"))
+            if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.CAMERA), Constants.MY_CAMERA_PERMISSION_CODE)
+            } else {
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST)
             }
-
-            startActivityForResult(intent, Constants.GALLERY_REQUEST_CODE)
         }
 
         binding.tvAddMeal.setOnClickListener {
@@ -43,10 +52,11 @@ class AddMealController : BaseController<LayoutAddMealBinding>() {
                 val fats = binding.etFats.text.toString().toDouble()
                 val carbs = binding.etCarb.text.toString().toDouble()
                 val calories = binding.etCal.text.toString().toDouble()
+                val photoBase64 = if (mealBitmap != null) encodeToBase64(mealBitmap!!, context!!) else null
 
                 asyncSafe {
                     PumpYourSelfService.service.addEating(AddEatingRequest(userId, currDateStr,
-                        binding.etFoodName.text.toString(), weight, null, proteins, fats,
+                        binding.etFoodName.text.toString(), weight, photoBase64, proteins, fats,
                         carbs, calories)).await()
 
                     mainActivity.onBackPressed()
@@ -67,8 +77,9 @@ class AddMealController : BaseController<LayoutAddMealBinding>() {
     }
 
     @Subscribe
-    fun onImageGalleryEvent(event: ImageGalleryEvent) {
-        binding.ivMealIcon.setImageURI(event.uri)
+    fun onCameraEvent(event: CameraEvent) {
+        binding.ivMealIcon.setCircleImgBitmap(event.bitmap)
+        mealBitmap = event.bitmap
     }
 
     override fun getLayoutId(): Int = R.layout.layout_add_meal

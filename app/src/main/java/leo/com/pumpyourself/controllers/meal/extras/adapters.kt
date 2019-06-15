@@ -39,11 +39,12 @@ class MealAdapter(onClick: OnItemClickListener<ItemMeal>?) : LazyAdapter<ItemMea
 
 }
 
-class MealHistoryAdapter : LazyAdapter<ItemMealHistory, ItemMealHistoryBinding>() {
+class MealHistoryAdapter(val mealItemClickListener: OnItemClickListener<ItemMeal>) : LazyAdapter<ItemMealHistory, ItemMealHistoryBinding>() {
+
 
     override fun bindData(data: ItemMealHistory, binding: ItemMealHistoryBinding) {
         binding.tvMealDate.text = data.date
-        binding.rvMeals.initWithLinLay(LinearLayoutManager.VERTICAL, MealAdapter(null), data.meals)
+        binding.rvMeals.initWithLinLay(LinearLayoutManager.VERTICAL, MealAdapter(mealItemClickListener), data.meals)
     }
 
     override fun getLayoutId(): Int = R.layout.item_meal_history

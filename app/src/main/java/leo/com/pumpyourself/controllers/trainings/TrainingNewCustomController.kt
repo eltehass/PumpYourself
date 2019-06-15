@@ -45,7 +45,7 @@ class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBindin
                 val adapter = binding.rvDays.adapter as DayExercisesAdapter
                 adapter.addData(ItemDayExercise("Day ${adapter.itemCount+1}", dialogEditText.text.toString()))
 
-                daysInfo.add(ItemDayExercise("Day ${adapter.itemCount+1}", dialogEditText.text.toString()))
+                daysInfo.add(ItemDayExercise("Day ${adapter.itemCount}", dialogEditText.text.toString()))
 
                 dialogEditText.setText("")
                 dialog.dismiss()
