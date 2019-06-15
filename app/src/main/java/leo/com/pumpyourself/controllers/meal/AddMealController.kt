@@ -61,8 +61,7 @@ class AddMealController : BaseController<LayoutAddMealBinding>() {
 
                     mainActivity.onBackPressed()
                 }
-            }
-            catch (e : Exception) {
+            } catch (e: Exception) {
                 Toast.makeText(context, "Incorrect number", Toast.LENGTH_LONG).show()
             }
         }
@@ -85,5 +84,4 @@ class AddMealController : BaseController<LayoutAddMealBinding>() {
     override fun getLayoutId(): Int = R.layout.layout_add_meal
 
     override fun getTitle(): String = "Add meal"
-
 }

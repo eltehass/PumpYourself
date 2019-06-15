@@ -2,7 +2,6 @@ package leo.com.pumpyourself.controllers.trainings.extras
 
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
-import leo.com.pumpyourself.databinding.ItemDayExerciseBinding
 import leo.com.pumpyourself.databinding.ItemTrainingBinding
 import leo.com.pumpyourself.databinding.ItemTrainingNewBinding
 
@@ -17,7 +16,6 @@ class TrainingsAdapter(onClick: OnItemClickListener<ItemTraining>)
   }
 
   override fun getLayoutId(): Int = R.layout.item_training
-
 }
 
 class TrainingNewAdapter(onClick: OnItemClickListener<ItemTraining>)
@@ -30,5 +28,4 @@ class TrainingNewAdapter(onClick: OnItemClickListener<ItemTraining>)
   }
 
   override fun getLayoutId(): Int = R.layout.item_training_new
-
 }

@@ -30,10 +30,10 @@ class MealStatisticsController : BaseController<LayoutMealStatisticsBinding>() {
         binding.tvCal3Value.text = "560 kcal"
         binding.tvCal4Value.text = "560 kcal"
 
-        binding.acvChart.initWithValues(145, 30, 95, 60,"Stuff for today")
+        binding.acvChart.initWithValues(145, 30, 95, 60, "Stuff for today")
     }
 
     override fun getLayoutId(): Int = R.layout.layout_meal_statistics
 
-    override fun getTitle(): String  = "Meal statistics"
+    override fun getTitle(): String = "Meal statistics"
 }

@@ -6,7 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-
 interface PumpYourselfApi {
 
     /** Meals **/
@@ -14,7 +13,8 @@ interface PumpYourselfApi {
     fun getAllFood(
         @Query("user_id") userId: Int,
         @Query("start_date") startDate: String,
-        @Query("end_date") endDate: String) : Deferred<List<FoodResponse>>
+        @Query("end_date") endDate: String
+    ): Deferred<List<FoodResponse>>
 
     @POST("meal/addeating")
     fun addEating(@Body meal: AddEatingRequest): Deferred<Int>
@@ -25,29 +25,28 @@ interface PumpYourselfApi {
     @POST("meal/deleteeating")
     fun deleteEating(@Body user_dish_id: Int): Deferred<Int>
 
-
     /** Trainings **/
     @GET("trainings/getallusertrainings")
-    fun getAllUserTrainings(@Query("user_id") userId: Int) : Deferred<List<UserTrainingResponse>>
+    fun getAllUserTrainings(@Query("user_id") userId: Int): Deferred<List<UserTrainingResponse>>
 
     @GET("trainings/getallpublictrainings")
-    fun getAllPublicTrainings() : Deferred<List<PublicTrainingResponse>>
+    fun getAllPublicTrainings(): Deferred<List<PublicTrainingResponse>>
 
     @POST("trainings/createtraining")
-    fun createTraining(@Body training: List<CreateTrainingRequest>) : Deferred<Int>
+    fun createTraining(@Body training: List<CreateTrainingRequest>): Deferred<Int>
 
     @POST("trainings/starttraining")
-    fun startTraining(@Body training: StartTrainingRequest) : Deferred<Unit>
+    fun startTraining(@Body training: StartTrainingRequest): Deferred<Unit>
 
     @POST("trainings/stoptraining")
-    fun stopTraining(@Body training: StopTrainingRequest) : Deferred<Unit>
+    fun stopTraining(@Body training: StopTrainingRequest): Deferred<Unit>
 
     /** Groups **/
     @GET("/groups/getallusergroups")
-    fun getAllUserGroups(@Query("user_id") userId: Int) : Deferred<List<UserGroupResponse>>
+    fun getAllUserGroups(@Query("user_id") userId: Int): Deferred<List<UserGroupResponse>>
 
     @GET("/groups/getmoregroupinfo")
-    fun getMoreGroupInfo(@Query("group_id") groupId: Int) : Deferred<MoreDetailedGroupInfoResponse>
+    fun getMoreGroupInfo(@Query("group_id") groupId: Int): Deferred<MoreDetailedGroupInfoResponse>
 
     @POST("groups/addgroup")
     fun addGroup(@Body group: AddGroupRequest): Deferred<Int>
@@ -65,18 +64,18 @@ interface PumpYourselfApi {
     @GET("profile/getprofileinfo")
     fun getProfileInfo(
         @Query("user_id") userId: Int
-    ) : Deferred<ProfileGetUserResponse>
+    ): Deferred<ProfileGetUserResponse>
 
     @GET("profile/getfriendinfo")
     fun getFriendInfo(
         @Query("user_id") userId: Int,
         @Query("friend_id") friendId: Int
-    ) : Deferred<ProfileFriendInfo>
+    ): Deferred<ProfileFriendInfo>
 
     @GET("profile/searchuser")
     fun searchUsers(
         @Query("phrase") phrase: String
-    ) : Deferred<List<UserInfo>>
+    ): Deferred<List<UserInfo>>
 
     @POST("profile/changeprofileinfo")
     fun changeProfileInfo(@Body changeUserInfo: ChangeUserInfo): Deferred<Unit>

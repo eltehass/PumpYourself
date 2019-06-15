@@ -8,10 +8,8 @@ import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.controllers.profile.extras.FriendsAdapter
 import leo.com.pumpyourself.controllers.profile.extras.ItemFriend
-import leo.com.pumpyourself.controllers.profile.extras.ItemGroup
 import leo.com.pumpyourself.databinding.LayoutProfileFriendsBinding
 import leo.com.pumpyourself.network.Friend
-import leo.com.pumpyourself.network.ProfileGetUserResponse
 
 class ProfileFriendsController : BaseController<LayoutProfileFriendsBinding>(),
     LazyAdapter.OnItemClickListener<ItemFriend> {

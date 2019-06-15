@@ -43,7 +43,7 @@ class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBindin
                 Toast.makeText(it.context, "Field is empty", Toast.LENGTH_LONG).show()
             } else {
                 val adapter = binding.rvDays.adapter as DayExercisesAdapter
-                adapter.addData(ItemDayExercise("Day ${adapter.itemCount+1}", dialogEditText.text.toString()))
+                adapter.addData(ItemDayExercise("Day ${adapter.itemCount + 1}", dialogEditText.text.toString()))
 
                 daysInfo.add(ItemDayExercise("Day ${adapter.itemCount}", dialogEditText.text.toString()))
 
@@ -92,5 +92,4 @@ class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBindin
     override fun getLayoutId(): Int = R.layout.layout_training_new_custom
 
     override fun getTitle(): String = "Custom training"
-
 }

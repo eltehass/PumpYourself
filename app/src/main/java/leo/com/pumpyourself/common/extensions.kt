@@ -26,13 +26,11 @@ fun ImageView.setCircleImgBitmap(bitmap: Bitmap) {
         .into(this)
 }
 
-
 fun ImageView.setImgUrl(imgUrl: String) {
     Glide.with(context)
         .load(imgUrl)
         .into(this)
 }
-
 
 fun ImageView.setCircleImgResource(imgResource: Int) {
     Glide.with(context)

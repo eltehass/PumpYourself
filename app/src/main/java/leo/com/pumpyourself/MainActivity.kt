@@ -154,11 +154,9 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     if (resultCode != Activity.RESULT_OK) { return }
     val photo = data?.extras?.get("data") as Bitmap
     EventBus.getDefault().post(CameraEvent(photo))
   }
-
 }

@@ -21,7 +21,7 @@ class EditGroupController : BaseController<LayoutEditGroupBinding>() {
 
   override fun initController() {
 
-    val itemGroup = arguments?.get("item_group") as ItemGroup? ?: ItemGroup("","", "")
+    val itemGroup = arguments?.get("item_group") as ItemGroup? ?: ItemGroup("", "", "")
 
     binding.etGroupName.setText(itemGroup.name)
     binding.etGroupDescription.setText(itemGroup.description)
@@ -90,5 +90,4 @@ class EditGroupController : BaseController<LayoutEditGroupBinding>() {
   override fun getLayoutId(): Int = R.layout.layout_edit_group
 
   override fun getTitle(): String = "Edit group"
-
 }

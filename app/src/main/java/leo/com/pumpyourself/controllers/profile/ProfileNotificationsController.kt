@@ -2,7 +2,10 @@ package leo.com.pumpyourself.controllers.profile
 
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import leo.com.pumpyourself.R
 import leo.com.pumpyourself.common.setCircleImgUrl
 import leo.com.pumpyourself.controllers.base.BaseController
@@ -28,14 +31,14 @@ class ProfileNotificationsController : BaseController<LayoutProfileNotifications
         val userId = arguments?.get("user_id") as Int? ?: 1
 
         val friendsRequests = arguments?.get("friends_requests") as Array<FriendsRequest>? ?: arrayOf()
-        val groupsRequests = arguments?.get("groups_requests")  as Array<GroupsRequest>? ?: arrayOf()
+        val groupsRequests = arguments?.get("groups_requests") as Array<GroupsRequest>? ?: arrayOf()
 
         binding.rvContainerGroups.initWithLinLay(
             LinearLayout.VERTICAL, GroupsRequestsAdapter(
                 object : LazyAdapter.OnItemClickListener<ItemGroup> {
                     override fun onLazyItemClick(data: ItemGroup) {
 
-                        val inflater =  LayoutInflater.from(context)        // Maybe wrong
+                        val inflater = LayoutInflater.from(context) // Maybe wrong
 
                         val groupDialog = AlertDialog.Builder(binding.root.context).create()
                         val groupDialogView = inflater.inflate(R.layout.dialog_group_notification, null)
@@ -92,7 +95,7 @@ class ProfileNotificationsController : BaseController<LayoutProfileNotifications
                 object : LazyAdapter.OnItemClickListener<ItemFriend> {
                     override fun onLazyItemClick(data: ItemFriend) {
 
-                        val inflater =  LayoutInflater.from(context)        // Maybe wrong
+                        val inflater = LayoutInflater.from(context) // Maybe wrong
 
                         val friendDialog = AlertDialog.Builder(binding.root.context).create()
                         val friendDialogView = inflater.inflate(R.layout.dialog_friend_notification, null)
@@ -140,6 +143,6 @@ class ProfileNotificationsController : BaseController<LayoutProfileNotifications
                 }
             ),
             friendsRequests.map { item -> ItemFriend(userId, item.friendId.toInt(), item.userName,
-                item.userStatus,"http://upe.pl.ua:8080/images/users?image_id=" + item.friendId) })
+                item.userStatus, "http://upe.pl.ua:8080/images/users?image_id=" + item.friendId) })
     }
 }

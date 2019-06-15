@@ -130,5 +130,4 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
   override fun getLayoutId(): Int = R.layout.layout_profile
 
   override fun getTitle(): String = "Profile"
-
 }

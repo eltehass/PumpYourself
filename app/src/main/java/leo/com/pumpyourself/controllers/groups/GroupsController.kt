@@ -17,14 +17,14 @@ class GroupsController : BaseController<LayoutGroupsBinding>(), LazyAdapter.OnIt
   override fun initController() {
 
     val listData = listOf(
-            ItemGroup("Group of four","Group for morning run",""),
-            ItemGroup("Group of four","Group for morning run",""),
-            ItemGroup("Group of four","Group for morning run",""),
-            ItemGroup("Group of four","Group for morning run",""),
-            ItemGroup("Group of four","Group for morning run",""),
-            ItemGroup("Group of four","Group for morning run",""),
-            ItemGroup("Group of four","Group for morning run",""),
-            ItemGroup("Group of four","Group for morning run","")
+            ItemGroup("Group of four", "Group for morning run", ""),
+            ItemGroup("Group of four", "Group for morning run", ""),
+            ItemGroup("Group of four", "Group for morning run", ""),
+            ItemGroup("Group of four", "Group for morning run", ""),
+            ItemGroup("Group of four", "Group for morning run", ""),
+            ItemGroup("Group of four", "Group for morning run", ""),
+            ItemGroup("Group of four", "Group for morning run", ""),
+            ItemGroup("Group of four", "Group for morning run", "")
     )
 
     binding.rvContainer.initWithLinLay(LinearLayout.VERTICAL, GroupsAdapter(this), listData)
@@ -43,5 +43,4 @@ class GroupsController : BaseController<LayoutGroupsBinding>(), LazyAdapter.OnIt
   override fun getLayoutId(): Int = R.layout.layout_groups
 
   override fun getTitle(): String = "Groups"
-
 }

@@ -42,8 +42,8 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
       if (dialogEditText.text.toString().isEmpty()) {
         Toast.makeText(it.context, "Field is empty", Toast.LENGTH_LONG).show()
       } else {
-        (binding.rvDays.adapter as DayExercisesAdapter).let{ adapter ->
-          adapter.addData(ItemDayExercise("Day${adapter.itemCount+1}", dialogEditText.text.toString()))
+        (binding.rvDays.adapter as DayExercisesAdapter).let { adapter ->
+          adapter.addData(ItemDayExercise("Day${adapter.itemCount + 1}", dialogEditText.text.toString()))
         }
 
         dialogEditText.setText("")
@@ -121,5 +121,4 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
   override fun getLayoutId(): Int = R.layout.layout_create_group
 
   override fun getTitle(): String = "Create group"
-
 }

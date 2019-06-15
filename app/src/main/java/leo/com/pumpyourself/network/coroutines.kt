@@ -22,13 +22,12 @@ private class AndroidContinuation<T>(val cont: Continuation<T>) : Continuation<T
     if (Looper.myLooper() == Looper.getMainLooper()) cont.resumeWith(result)
     else Handler(Looper.getMainLooper()).post { cont.resumeWith(result) }
   }
-
 }
 
 inline fun <P> doCoroutineWork(
-  crossinline doOnAsyncBlock: suspend CoroutineScope.() -> P,
-  coroutineScope: CoroutineScope,
-  context: CoroutineContext
+    crossinline doOnAsyncBlock: suspend CoroutineScope.() -> P,
+    coroutineScope: CoroutineScope,
+    context: CoroutineContext
 ) {
   coroutineScope.launch {
     withContext(context) {
