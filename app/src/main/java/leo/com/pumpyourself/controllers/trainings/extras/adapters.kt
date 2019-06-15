@@ -20,10 +20,10 @@ class TrainingsAdapter(onClick: OnItemClickListener<ItemTraining>)
 
 }
 
-class TrainingNewAdapter(onClick: OnItemClickListener<ItemTrainingNew>)
-  : LazyAdapter<ItemTrainingNew, ItemTrainingNewBinding>(onClick) {
+class TrainingNewAdapter(onClick: OnItemClickListener<ItemTraining>)
+  : LazyAdapter<ItemTraining, ItemTrainingNewBinding>(onClick) {
 
-  override fun bindData(data: ItemTrainingNew, binding: ItemTrainingNewBinding) {
+  override fun bindData(data: ItemTraining, binding: ItemTrainingNewBinding) {
     binding.tvTitle.text = data.title
     binding.tvDescription.text = data.description
     binding.cvContainer.setOnClickListener { itemClickListener?.onLazyItemClick(data) }

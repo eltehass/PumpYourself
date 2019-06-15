@@ -34,7 +34,7 @@ interface PumpYourselfApi {
     fun getAllPublicTrainings() : Deferred<List<PublicTrainingResponse>>
 
     @POST("trainings/createtraining")
-    fun createTraining(@Body training: CreateTrainingRequest) : Deferred<Int>
+    fun createTraining(@Body training: List<CreateTrainingRequest>) : Deferred<Int>
 
     @POST("trainings/starttraining")
     fun startTraining(@Body training: StartTrainingRequest) : Deferred<Unit>

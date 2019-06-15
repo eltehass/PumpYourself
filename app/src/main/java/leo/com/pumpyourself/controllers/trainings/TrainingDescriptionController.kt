@@ -8,6 +8,8 @@ import leo.com.pumpyourself.controllers.groups.extras.DayExercisesAdapter
 import leo.com.pumpyourself.controllers.groups.extras.ItemDayExercise
 import leo.com.pumpyourself.controllers.trainings.extras.ItemTraining
 import leo.com.pumpyourself.databinding.LayoutTrainingDescriptionBinding
+import leo.com.pumpyourself.network.PumpYourSelfService
+import leo.com.pumpyourself.network.StopTrainingRequest
 
 class TrainingDescriptionController : BaseController<LayoutTrainingDescriptionBinding>() {
 
@@ -15,23 +17,22 @@ class TrainingDescriptionController : BaseController<LayoutTrainingDescriptionBi
 
     override fun initController() {
 
-        val itemTraining = arguments?.get("item_training") as ItemTraining? ?: ItemTraining("","", "")
+        val userId = arguments?.get("user_id") as Int? ?: 1
+        val itemTraining = arguments?.get("item_training") as ItemTraining? ?:
+            ItemTraining(0, "","", "", listOf())
 
         binding.tvTitle.text = itemTraining.title
         binding.tvDescription.text = itemTraining.description
 
-        // TODO: Change the text color according to current day
-        val dayExercises = listOf(
-            ItemDayExercise("Day 1", "Run 1 km"),
-            ItemDayExercise("Day 2", "Run 2 km"),
-            ItemDayExercise("Day 3", "Run 3 km"),
-            ItemDayExercise("Day 4", "Run 4 km")
-        )
+        binding.rvDays.initWithLinLay(LinearLayout.VERTICAL, DayExercisesAdapter(), itemTraining.days)
 
-        binding.rvDays.initWithLinLay(LinearLayout.VERTICAL, DayExercisesAdapter(), dayExercises)
-
-        // TODO: Add the training stopping
-        binding.tvStop.setOnClickListener { activity?.onBackPressed() }
+        binding.tvStop.setOnClickListener {
+            asyncSafe {
+                PumpYourSelfService.service.stopTraining(
+                    StopTrainingRequest(userId, itemTraining.trainingId)).await()
+                mainActivity.onBackPressed()
+            }
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.layout_training_description

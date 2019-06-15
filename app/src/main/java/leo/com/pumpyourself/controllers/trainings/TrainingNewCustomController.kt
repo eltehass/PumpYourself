@@ -15,12 +15,19 @@ import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.controllers.groups.extras.DayExercisesAdapter
 import leo.com.pumpyourself.controllers.groups.extras.ItemDayExercise
 import leo.com.pumpyourself.databinding.LayoutTrainingNewCustomBinding
+import leo.com.pumpyourself.network.CreateTrainingRequest
+import leo.com.pumpyourself.network.PumpYourSelfService
+import leo.com.pumpyourself.network.StartTrainingRequest
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBinding>() {
 
     override lateinit var binding: LayoutTrainingNewCustomBinding
 
     private lateinit var dialog: AlertDialog
+
+    private val daysInfo: MutableList<ItemDayExercise> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
@@ -36,7 +43,9 @@ class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBindin
                 Toast.makeText(it.context, "Field is empty", Toast.LENGTH_LONG).show()
             } else {
                 val adapter = binding.rvDays.adapter as DayExercisesAdapter
-                adapter.addData(ItemDayExercise("Day${adapter.itemCount+1}", dialogEditText.text.toString()))
+                adapter.addData(ItemDayExercise("Day ${adapter.itemCount+1}", dialogEditText.text.toString()))
+
+                daysInfo.add(ItemDayExercise("Day ${adapter.itemCount+1}", dialogEditText.text.toString()))
 
                 dialogEditText.setText("")
                 dialog.dismiss()
@@ -51,13 +60,33 @@ class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBindin
 
     override fun initController() {
 
-        binding.tvSave.setOnClickListener { activity?.onBackPressed() }
+        val userId = arguments?.get("user_id") as Int? ?: 1
+
+        binding.rvDays.initWithLinLay(LinearLayoutManager.VERTICAL, DayExercisesAdapter(), listOf())
 
         binding.tvAddDay.setOnClickListener {
             dialog.show()
         }
 
-        binding.rvDays.initWithLinLay(LinearLayoutManager.VERTICAL, DayExercisesAdapter(), listOf())
+        binding.tvSave.setOnClickListener {
+
+            val currDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                .format(Calendar.getInstance().time)
+
+            asyncSafe {
+                val trainingId = PumpYourSelfService.service.createTraining(daysInfo.map {
+                    CreateTrainingRequest(binding.tvTrainingName.text.toString(),
+                        binding.tvTrainingDescription.text.toString(),
+                        it.name.substring(4).toInt(),
+                        it.description)
+                }).await()
+
+                PumpYourSelfService.service.startTraining(
+                    StartTrainingRequest(userId, trainingId, currDateStr)).await()
+
+                mainActivity.onBackPressed()
+            }
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.layout_training_new_custom
