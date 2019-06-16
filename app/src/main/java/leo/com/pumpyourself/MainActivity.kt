@@ -219,6 +219,11 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
+  fun goToLoginActivity() {
+    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+    finish()
+  }
+
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     if (resultCode != Activity.RESULT_OK) { return }
     val photo = data?.extras?.get("data") as Bitmap

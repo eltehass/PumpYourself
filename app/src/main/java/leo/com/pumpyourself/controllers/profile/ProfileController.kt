@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import leo.com.pumpyourself.R
+import leo.com.pumpyourself.common.AccountManager
 import leo.com.pumpyourself.common.setCircleImgUrl
 import leo.com.pumpyourself.common.setImgUrl
 import leo.com.pumpyourself.controllers.base.BaseController
@@ -40,6 +41,8 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
     logOutDialogView.findViewById<TextView>(R.id.tv_no).setOnClickListener { logOutDialog.dismiss() }
     logOutDialogView.findViewById<TextView>(R.id.tv_yes).setOnClickListener {
       // TODO: Log out
+      AccountManager.logOut(context!!)
+      mainActivity.goToLoginActivity()
       logOutDialog.dismiss()
     }
 

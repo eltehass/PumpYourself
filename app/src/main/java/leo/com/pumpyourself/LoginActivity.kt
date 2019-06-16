@@ -15,6 +15,7 @@ import android.widget.TextView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import leo.com.pumpyourself.common.AccountManager
 import leo.com.pumpyourself.network.AndroidCoroutineContextElement
 import leo.com.pumpyourself.network.doCoroutineWork
 
@@ -39,6 +40,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 //        FirebaseApp.initializeApp(this)
+
+        val userId = AccountManager.getId(this)
+        if (userId != -1) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
 
         rootView = findViewById(R.id.root_view)
         tvOperation = findViewById(R.id.tv_operation)
@@ -88,8 +95,17 @@ class LoginActivity : AppCompatActivity() {
 
         btnAction.setOnClickListener {
             // TODO add requests
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+
+            asyncSafe {
+                // todo write logIn or register requests depands on isLoginScreenState
+                val id = 5
+                AccountManager.setId(id, this@LoginActivity)
+            }
+
+            if (userId != -1) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
         }
     }
 
