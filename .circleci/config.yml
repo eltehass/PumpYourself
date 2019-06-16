@@ -29,9 +29,9 @@ jobs:
           name: Run Build
           command: ./gradlew build
 
-    - run:
-        name: chmod permissions
-        command: chmod +x ./gradlew
+      - run:
+          name: chmod permissions
+          command: chmod +x ./gradlew
 
       - store_artifacts:
           path: app/build/outputs/apk/debug/
