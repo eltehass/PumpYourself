@@ -12,8 +12,16 @@ import android.view.animation.Animation
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import leo.com.pumpyourself.network.AndroidCoroutineContextElement
+import leo.com.pumpyourself.network.doCoroutineWork
 
 class LoginActivity : AppCompatActivity() {
+
+    private var coroutineJob = Job()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + coroutineJob)
 
     private var isLoginScreenState = false
 
@@ -31,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 //        FirebaseApp.initializeApp(this)
-
 
         rootView = findViewById(R.id.root_view)
         tvOperation = findViewById(R.id.tv_operation)
@@ -85,4 +92,10 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
     }
+
+
+    fun <P> asyncSafe(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
+        doCoroutineWork(doOnAsyncBlock, coroutineScope, AndroidCoroutineContextElement)
+    }
+
 }
