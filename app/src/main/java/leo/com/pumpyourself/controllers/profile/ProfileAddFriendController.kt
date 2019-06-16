@@ -1,6 +1,5 @@
 package leo.com.pumpyourself.controllers.profile
 
-import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.Toast
 import leo.com.pumpyourself.R
@@ -47,7 +46,6 @@ class ProfileAddFriendController : BaseController<LayoutProfileAddFriendBinding>
                         }),
                     networkResult.map { item -> ItemAddFriend(item.userId, item.userName,
                         "http://upe.pl.ua:8080/images/users?image_id=" + item.userId) })
-
             }
         }
     }

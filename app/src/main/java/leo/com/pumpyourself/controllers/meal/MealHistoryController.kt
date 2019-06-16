@@ -53,7 +53,6 @@ class MealHistoryController : BaseController<LayoutMealHistoryBinding>() {
                 )
             }
 
-
             val itemMealClickListener = object : LazyAdapter.OnItemClickListener<ItemMeal> {
                 override fun onLazyItemClick(data: ItemMeal) {
                     onItemMealClick(data)
@@ -62,7 +61,7 @@ class MealHistoryController : BaseController<LayoutMealHistoryBinding>() {
 
             val mealHistoryAdapter = MealHistoryAdapter(itemMealClickListener)
 
-            binding.rvMealHistories.initWithLinLay(LinearLayoutManager.VERTICAL, mealHistoryAdapter, mealHistories.sortedByDescending { it.date } )
+            binding.rvMealHistories.initWithLinLay(LinearLayoutManager.VERTICAL, mealHistoryAdapter, mealHistories.sortedByDescending { it.date })
         }
     }
 

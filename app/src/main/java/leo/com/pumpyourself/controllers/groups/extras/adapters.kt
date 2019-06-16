@@ -24,7 +24,6 @@ class GroupsAdapter(onClick: OnItemClickListener<ItemGroup>) : LazyAdapter<ItemG
   }
 
   override fun getLayoutId(): Int = R.layout.item_group
-
 }
 
 class MembersAdapter : LazyAdapter<ItemMember, ItemMemberBinding>() {
@@ -40,7 +39,6 @@ class MembersAdapter : LazyAdapter<ItemMember, ItemMemberBinding>() {
   }
 
   override fun getLayoutId(): Int = R.layout.item_member
-
 }
 
 class DayExercisesAdapter : LazyAdapter<ItemDayExercise, ItemDayExerciseBinding>() {
@@ -51,7 +49,6 @@ class DayExercisesAdapter : LazyAdapter<ItemDayExercise, ItemDayExerciseBinding>
   }
 
   override fun getLayoutId(): Int = R.layout.item_day_exercise
-
 }
 
 class FriendsAdapter : LazyAdapter<ItemFriend, ItemChooseFriendBinding>() {
@@ -68,5 +65,4 @@ class FriendsAdapter : LazyAdapter<ItemFriend, ItemChooseFriendBinding>() {
   }
 
   override fun getLayoutId(): Int = R.layout.item_choose_friend
-
 }

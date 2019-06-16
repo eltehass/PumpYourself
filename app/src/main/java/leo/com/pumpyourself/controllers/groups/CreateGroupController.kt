@@ -130,5 +130,4 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
   override fun getLayoutId(): Int = R.layout.layout_create_group
 
   override fun getTitle(): String = "Create group"
-
 }

@@ -18,7 +18,6 @@ class MealUnitAdapter : LazyAdapter<ItemMealUnit, ItemMealUnitBinding>() {
     }
 
     override fun getLayoutId(): Int = R.layout.item_meal_unit
-
 }
 
 class MealAdapter(onClick: OnItemClickListener<ItemMeal>?) : LazyAdapter<ItemMeal, ItemMealBinding>(onClick) {
@@ -36,11 +35,9 @@ class MealAdapter(onClick: OnItemClickListener<ItemMeal>?) : LazyAdapter<ItemMea
     }
 
     override fun getLayoutId(): Int = R.layout.item_meal
-
 }
 
 class MealHistoryAdapter(val mealItemClickListener: OnItemClickListener<ItemMeal>) : LazyAdapter<ItemMealHistory, ItemMealHistoryBinding>() {
-
 
     override fun bindData(data: ItemMealHistory, binding: ItemMealHistoryBinding) {
         binding.tvMealDate.text = data.date
@@ -48,5 +45,4 @@ class MealHistoryAdapter(val mealItemClickListener: OnItemClickListener<ItemMeal
     }
 
     override fun getLayoutId(): Int = R.layout.item_meal_history
-
 }

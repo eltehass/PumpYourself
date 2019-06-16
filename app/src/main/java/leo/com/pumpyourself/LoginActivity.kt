@@ -77,9 +77,8 @@ class LoginActivity : AppCompatActivity() {
             tvOperation.startAnimation(anim)
         }
 
-
         btnAction.setOnClickListener {
-            //TODO add requests
+            // TODO add requests
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

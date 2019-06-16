@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 class TrainingsController : BaseController<LayoutTrainingsBinding>(), LazyAdapter.OnItemClickListener<ItemTraining> {
 
     override lateinit var binding: LayoutTrainingsBinding
@@ -76,5 +75,3 @@ class TrainingsController : BaseController<LayoutTrainingsBinding>(), LazyAdapte
 
     override fun getTitle(): String = "Trainings"
 }
-
-

@@ -16,5 +16,4 @@ object PumpYourSelfService {
       .addConverterFactory(GsonConverterFactory.create())
       .build()
       .create(PumpYourselfApi::class.java)
-
 }

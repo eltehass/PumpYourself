@@ -31,7 +31,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class EditMealController : BaseController<LayoutEditMealBinding>() {
 
     override lateinit var binding: LayoutEditMealBinding
@@ -83,8 +82,7 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
 
                     mainActivity.onBackPressed()
                 }
-            }
-            catch (e : Exception) {
+            } catch (e: Exception) {
                 Toast.makeText(context, "Incorrect number", Toast.LENGTH_LONG).show()
             }
         }
@@ -117,10 +115,10 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
 //            //val base64 = encodeToBase64(event.uri, context!!)
 //            //val addMealObj = AddEatingRequest(5, "2019-06-09T201546", "efasfs", 232, base64, 123, 123, 213, 123)
 //
-////            asyncSafe {
-////                val res = PumpYourSelfService.service.addEating(addMealObj).await()
-////                Log.e("EditMealController", "Result: $res")
-////            }
+// //            asyncSafe {
+// //                val res = PumpYourSelfService.service.addEating(addMealObj).await()
+// //                Log.e("EditMealController", "Result: $res")
+// //            }
 //        }
 //    }
 
@@ -176,11 +174,7 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
         )
     }
 
-
-
-
     override fun getLayoutId(): Int = R.layout.layout_edit_meal
 
     override fun getTitle(): String = "Edit meal"
-
 }

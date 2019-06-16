@@ -58,5 +58,4 @@ abstract class BaseController<LayoutClassBinding : ViewDataBinding> : Fragment()
   abstract fun getLayoutId(): Int
 
   abstract fun getTitle(): String
-
 }

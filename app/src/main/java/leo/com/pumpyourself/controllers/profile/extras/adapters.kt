@@ -9,7 +9,6 @@ import leo.com.pumpyourself.databinding.ItemFriendNotificationBinding
 import leo.com.pumpyourself.databinding.ItemGroupNotificationBinding
 import leo.com.pumpyourself.databinding.ItemProfileFriendsBinding
 
-
 class FriendsAdapter(onClick: OnItemClickListener<ItemFriend>)
     : LazyAdapter<ItemFriend, ItemProfileFriendsBinding>(onClick) {
 
@@ -27,9 +26,7 @@ class FriendsAdapter(onClick: OnItemClickListener<ItemFriend>)
     }
 
     override fun getLayoutId(): Int = R.layout.item_profile_friends
-
 }
-
 
 class GroupsRequestsAdapter(onClick: OnItemClickListener<ItemGroup>)
     : LazyAdapter<ItemGroup, ItemGroupNotificationBinding>(onClick) {
@@ -50,7 +47,6 @@ class GroupsRequestsAdapter(onClick: OnItemClickListener<ItemGroup>)
     override fun getLayoutId(): Int = R.layout.item_group_notification
 }
 
-
 class FriendsRequestsAdapter(onClick: OnItemClickListener<ItemFriend>)
     : LazyAdapter<ItemFriend, ItemFriendNotificationBinding>(onClick) {
 
@@ -69,7 +65,6 @@ class FriendsRequestsAdapter(onClick: OnItemClickListener<ItemFriend>)
 
     override fun getLayoutId(): Int = R.layout.item_friend_notification
 }
-
 
 class AddFriendAdapter(onClick: OnItemClickListener<ItemAddFriend>)
     : LazyAdapter<ItemAddFriend, ItemAddFriendBinding>(onClick) {

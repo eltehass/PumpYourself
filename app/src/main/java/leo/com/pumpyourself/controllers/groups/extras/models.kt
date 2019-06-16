@@ -10,13 +10,13 @@ data class ItemGroup(
 ) : Serializable
 
 data class ItemMember(
-  val name: String,
-  val imgUrl: String
+    val name: String,
+    val imgUrl: String
 )
 
 data class ItemDayExercise(
-  val name: String,
-  val description: String
+    val name: String,
+    val description: String
 )
 
 data class ItemFriend(

@@ -90,5 +90,4 @@ class EditGroupController : BaseController<LayoutEditGroupBinding>() {
   override fun getLayoutId(): Int = R.layout.layout_edit_group
 
   override fun getTitle(): String = "Edit group"
-
 }

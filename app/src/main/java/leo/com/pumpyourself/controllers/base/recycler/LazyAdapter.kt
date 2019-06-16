@@ -32,7 +32,7 @@ abstract class LazyAdapter <DataType, LayoutClassBinding : ViewDataBinding> (val
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewLazyViewHolder<DataType> {
         val binding: LayoutClassBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), getLayoutId(), parent, false)
-        return object: NewLazyViewHolder<DataType>(binding) {
+        return object : NewLazyViewHolder<DataType>(binding) {
             override fun bindData(data: DataType) {
                 bindData(data, binding)
             }
@@ -52,5 +52,4 @@ abstract class LazyAdapter <DataType, LayoutClassBinding : ViewDataBinding> (val
     interface OnItemClickListener <DataType> {
         fun onLazyItemClick(data: DataType)
     }
-
 }

@@ -55,5 +55,4 @@ class GroupsController : BaseController<LayoutGroupsBinding>(), LazyAdapter.OnIt
   override fun getLayoutId(): Int = R.layout.layout_groups
 
   override fun getTitle(): String = "Groups"
-
 }

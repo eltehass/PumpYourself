@@ -5,7 +5,6 @@ import leo.com.pumpyourself.R
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.controllers.groups.extras.DayExercisesAdapter
-import leo.com.pumpyourself.controllers.groups.extras.ItemDayExercise
 import leo.com.pumpyourself.controllers.trainings.extras.ItemTraining
 import leo.com.pumpyourself.databinding.LayoutTrainingNewDescriptionBinding
 import leo.com.pumpyourself.network.PumpYourSelfService
@@ -20,8 +19,8 @@ class TrainingNewDescriptionController : BaseController<LayoutTrainingNewDescrip
     override fun initController() {
 
         val userId = arguments?.get("user_id") as Int? ?: 1
-        val itemTraining = arguments?.get("item_training") as ItemTraining? ?:
-            ItemTraining(0, "","", "", listOf())
+        val itemTraining = arguments?.get("item_training") as ItemTraining?
+            ?: ItemTraining(0, "", "", "", listOf())
 
         binding.tvTitle.text = itemTraining.title
         binding.tvDescription.text = itemTraining.description
@@ -45,5 +44,4 @@ class TrainingNewDescriptionController : BaseController<LayoutTrainingNewDescrip
     override fun getLayoutId(): Int = R.layout.layout_training_new_description
 
     override fun getTitle(): String = "View training"
-
 }

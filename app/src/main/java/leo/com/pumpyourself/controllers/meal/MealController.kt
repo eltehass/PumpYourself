@@ -59,9 +59,9 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
 
           val mealUnits = listOf(
               ItemMealUnit("Proteins", "$proteins g"),
-              ItemMealUnit("Fats","$fats g"),
-              ItemMealUnit("Carbs","$carbs g"),
-              ItemMealUnit("Calories","$calories kcal")
+              ItemMealUnit("Fats", "$fats g"),
+              ItemMealUnit("Carbs", "$carbs g"),
+              ItemMealUnit("Calories", "$calories kcal")
           )
 
           val meals = networkResult.map { ItemMeal(it.userDishId, it.dishName, it.weight,
@@ -69,14 +69,12 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
               it.proteins, it.fats, it.carbohydrates, it.calories) }
 
           binding.acvChart.initWithValues(proteins.toInt(), fats.toInt(),
-              carbs.toInt(), calories.toInt(),"Consumed stuff")
+              carbs.toInt(), calories.toInt(), "Consumed stuff")
           binding.rvMealUnits.initWithGridLay(2, MealUnitAdapter(), mealUnits)
           binding.rvMeals.initWithLinLay(LinearLayoutManager.VERTICAL, MealAdapter(controllerThis), meals)
-
-
       }
 
-      //binding.cv2.setOnClickListener { show(TAB_MEAL, MealStatisticsController()) }
+      // binding.cv2.setOnClickListener { show(TAB_MEAL, MealStatisticsController()) }
 
       binding.ivCalendar.setOnClickListener {
           if (year == -1) {
@@ -132,5 +130,4 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
   override fun getLayoutId(): Int = R.layout.layout_meal
 
   override fun getTitle(): String = "Meal"
-
 }

@@ -11,8 +11,6 @@ import leo.com.pumpyourself.controllers.trainings.extras.ItemTraining
 import leo.com.pumpyourself.controllers.trainings.extras.TrainingNewAdapter
 import leo.com.pumpyourself.databinding.LayoutTrainingNewBinding
 import leo.com.pumpyourself.network.PumpYourSelfService
-import java.text.SimpleDateFormat
-import java.util.*
 
 class TrainingNewController : BaseController<LayoutTrainingNewBinding>(), LazyAdapter.OnItemClickListener<ItemTraining> {
 
@@ -31,7 +29,7 @@ class TrainingNewController : BaseController<LayoutTrainingNewBinding>(), LazyAd
             val trainings = networkResult.groupBy { it.trainingID }
 
             val dataList = trainings.map {
-                ItemTraining(it.key, it.value[0].trainingName, it.value[0].trainingDescription,"",
+                ItemTraining(it.key, it.value[0].trainingName, it.value[0].trainingDescription, "",
                     it.value.map { itIn -> ItemDayExercise("Day " + itIn.dayNumber, itIn.dayPlan) }
                         .sortedBy { itIn -> itIn.name }
                 )

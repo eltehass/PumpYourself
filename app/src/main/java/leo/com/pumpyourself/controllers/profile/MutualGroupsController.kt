@@ -29,7 +29,6 @@ class MutualGroupsController : BaseController<LayoutMutualGroupsBinding>(),
             LinearLayout.VERTICAL, GroupsAdapter(this),
             groups.map { item -> ItemGroup(item.groupId, item.groupName, item.groupDescription,
                 "http://upe.pl.ua:8080/images/groups?image_id=" + item.groupId) })
-
     }
 
     override fun onLazyItemClick(data: ItemGroup) {
@@ -40,5 +39,4 @@ class MutualGroupsController : BaseController<LayoutMutualGroupsBinding>(),
 
         show(TAB_PROFILE, groupsController)
     }
-
 }
