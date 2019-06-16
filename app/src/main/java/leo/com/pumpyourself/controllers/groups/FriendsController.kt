@@ -7,6 +7,7 @@ import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
 import leo.com.pumpyourself.controllers.groups.extras.FriendsAdapter
 import leo.com.pumpyourself.controllers.groups.extras.ItemFriend
 import leo.com.pumpyourself.databinding.LayoutFriendsBinding
+import leo.com.pumpyourself.network.PumpYourSelfService
 
 class FriendsController : BaseController<LayoutFriendsBinding>() {
 
@@ -14,15 +15,18 @@ class FriendsController : BaseController<LayoutFriendsBinding>() {
 
     override fun initController() {
 
-        val friends = listOf(
-                ItemFriend("Peter Jackson", "His status", ""),
-                ItemFriend("Peter Jackson", "His status", ""),
-                ItemFriend("Peter Jackson", "His status", ""),
-                ItemFriend("Peter Jackson", "His status", ""),
-                ItemFriend("Peter Jackson", "His status", "")
-        )
+        val userId = arguments?.get("user_id") as Int? ?: 1
 
-        binding.rvContainer.initWithLinLay(LinearLayoutManager.VERTICAL, FriendsAdapter(), friends)
+        asyncSafe {
+            val networkResult = PumpYourSelfService.service.getProfileInfo(userId).await()
+
+            val friends = networkResult.friends.map {
+                ItemFriend(it.friendId, it.userName, it.userStatus,
+                    "http://upe.pl.ua:8080/images/users?image_id=${it.friendId}")
+            }
+
+            binding.rvContainer.initWithLinLay(LinearLayoutManager.VERTICAL, FriendsAdapter(), friends)
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.layout_friends

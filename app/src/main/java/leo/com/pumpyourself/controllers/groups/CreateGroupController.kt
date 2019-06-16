@@ -20,14 +20,22 @@ import leo.com.pumpyourself.controllers.groups.extras.ItemDayExercise
 import leo.com.pumpyourself.controllers.groups.extras.ItemMember
 import leo.com.pumpyourself.controllers.groups.extras.MembersAdapter
 import leo.com.pumpyourself.databinding.LayoutCreateGroupBinding
+import leo.com.pumpyourself.network.AddGroupRequest
+import leo.com.pumpyourself.network.CreateTrainingRequest
+import leo.com.pumpyourself.network.PumpYourSelfService
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
 
   override lateinit var binding: LayoutCreateGroupBinding
 
   private lateinit var dialog: AlertDialog
+
+  private val members: MutableList<ItemMember> = mutableListOf()
+  private val daysInfo: MutableList<ItemDayExercise> = mutableListOf()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     val view = super.onCreateView(inflater, container, savedInstanceState)
@@ -44,6 +52,7 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
       } else {
         (binding.rvDays.adapter as DayExercisesAdapter).let{ adapter ->
           adapter.addData(ItemDayExercise("Day${adapter.itemCount+1}", dialogEditText.text.toString()))
+          daysInfo.add(ItemDayExercise("Day ${adapter.itemCount}", dialogEditText.text.toString()))
         }
 
         dialogEditText.setText("")
@@ -59,36 +68,17 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
 
   override fun initController() {
 
-    val members = listOf(
-            ItemMember("Leo", "http://upe.pl.ua:8080/images/users?image_id=1"),
-            ItemMember("Leo", "http://upe.pl.ua:8080/images/users?image_id=1"),
-            ItemMember("Leo", "http://upe.pl.ua:8080/images/users?image_id=1"),
-            ItemMember("Leo", ""),
-            ItemMember("Leo", ""),
-            ItemMember("Leo", ""),
-            ItemMember("Leo", ""),
-            ItemMember("Leo", "")
-    )
+    val userId = arguments?.get("user_id") as Int? ?: 1
 
-    val dayExercises = listOf(
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km"),
-            ItemDayExercise("Day1", "Run 1 km")
-    )
-
-    binding.rvMembers.initWithLinLay(LinearLayout.VERTICAL, MembersAdapter(), members)
+    binding.rvMembers.initWithLinLay(LinearLayout.VERTICAL, MembersAdapter(), listOf())
     binding.rvDays.initWithLinLay(LinearLayout.VERTICAL, DayExercisesAdapter(), listOf())
 
     binding.tvAddMember.setOnClickListener {
-      show(TAB_GROUPS, FriendsController())
+      val friendsController = FriendsController()
+      val bundle = Bundle()
+      bundle.putSerializable("user_id", userId)
+      friendsController.arguments = bundle
+      show(TAB_GROUPS, friendsController)
     }
 
     binding.tvAddDay.setOnClickListener {
@@ -102,6 +92,25 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
       }
 
       startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
+
+    binding.tvCreate.setOnClickListener {
+
+      val currDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        .format(Calendar.getInstance().time)
+
+      asyncSafe {
+        val trainingId = PumpYourSelfService.service.createTraining(daysInfo.map {
+          CreateTrainingRequest(binding.etGroupName.text.toString() + "_training", "",
+            it.name.substring(4).toInt(), it.description)
+        }).await()
+
+        PumpYourSelfService.service.addGroup(AddGroupRequest(
+          userId, binding.etGroupName.text.toString(), binding.etGroupDescription.text.toString(),
+          null, trainingId, currDateStr)).await()
+
+        mainActivity.onBackPressed()
+      }
     }
   }
 

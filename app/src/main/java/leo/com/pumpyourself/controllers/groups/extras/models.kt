@@ -3,6 +3,7 @@ package leo.com.pumpyourself.controllers.groups.extras
 import java.io.Serializable
 
 data class ItemGroup(
+  val groupId: Int,
   val name: String,
   val description: String,
   val imgUrl: String
@@ -19,6 +20,7 @@ data class ItemDayExercise(
 )
 
 data class ItemFriend(
+  val friendId: Int,
   val name: String,
   val status: String,
   val imgUrl: String

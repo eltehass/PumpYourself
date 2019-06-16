@@ -103,7 +103,7 @@ data class AddGroupRequest(
     @SerializedName("user_id")          val userId: Int,
     @SerializedName("group_name")       val groupName: String,
     @SerializedName("description")      val description: String,
-    @SerializedName("photo")            val photo: String,
+    @SerializedName("photo")            val photo: String?,
     @SerializedName("training_id")      val trainingId: Int,
     @SerializedName("start_date")       val startDate: String
 ): Serializable
@@ -135,19 +135,19 @@ data class ProfileGetUserResponse(
 ) : Serializable
 
 data class FriendsRequest(
-    @SerializedName("Friend_ID") val friendId: String,
+    @SerializedName("Friend_ID") val friendId: Int,
     @SerializedName("User_name") val userName: String,
     @SerializedName("User_status") val userStatus: String
 ) : Serializable
 
 data class GroupsRequest(
-    @SerializedName("Group_ID") val groupId: String,
+    @SerializedName("Group_ID") val groupId: Int,
     @SerializedName("Group_name") val groupName: String,
     @SerializedName("Group_description") val groupDescription: String
 ) : Serializable
 
 data class Friend(
-    @SerializedName("Friend_ID") val friendId: String,
+    @SerializedName("Friend_ID") val friendId: Int,
     @SerializedName("User_name") val userName: String,
     @SerializedName("User_status") val userStatus: String
 ) : Serializable

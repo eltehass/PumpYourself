@@ -27,7 +27,7 @@ class MutualGroupsController : BaseController<LayoutMutualGroupsBinding>(),
 
         binding.rvContainer.initWithLinLay(
             LinearLayout.VERTICAL, GroupsAdapter(this),
-            groups.map { item -> ItemGroup(item.groupName, item.groupDescription,
+            groups.map { item -> ItemGroup(item.groupId, item.groupName, item.groupDescription,
                 "http://upe.pl.ua:8080/images/groups?image_id=" + item.groupId) })
 
     }
