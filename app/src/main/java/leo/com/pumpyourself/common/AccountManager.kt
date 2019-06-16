@@ -2,6 +2,7 @@ package leo.com.pumpyourself.common
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import com.crashlytics.android.Crashlytics
 
 object AccountManager {
 
@@ -13,6 +14,7 @@ object AccountManager {
     fun setId(userId: Int, context: Context) {
         this.userId = userId
 
+        Crashlytics.setUserIdentifier("$userId")
         val editor = context.getSharedPreferences(USER_ID_PREFERENCE, MODE_PRIVATE).edit()
         editor.putInt(USER_ID_KEY, userId)
         editor.apply()
