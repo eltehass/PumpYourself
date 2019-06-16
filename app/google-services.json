@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1032329389600",
+    "firebase_url": "https://pumpyourself-e6a0b.firebaseio.com",
+    "project_id": "pumpyourself-e6a0b",
+    "storage_bucket": "pumpyourself-e6a0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032329389600:android:a10e0a2de6b846ce",
+        "android_client_info": {
+          "package_name": "leo.com.pumpyourself"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032329389600-lvcecbvfftcrs5j43pqvir4qi81rtnni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "leo.com.pumpyourself",
+            "certificate_hash": "d4a38500f5c8d110020a83f6731f114acf00cb4f"
+          }
+        },
+        {
+          "client_id": "1032329389600-atbl897vkp2tfrdrd683vd61epugg8kj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBapaH1HB21d46IkpK2ZluRanvlehzcaFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032329389600-atbl897vkp2tfrdrd683vd61epugg8kj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
