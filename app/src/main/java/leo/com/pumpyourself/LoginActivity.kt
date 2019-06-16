@@ -30,6 +30,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+//        FirebaseApp.initializeApp(this)
+
 
         rootView = findViewById(R.id.root_view)
         tvOperation = findViewById(R.id.tv_operation)
