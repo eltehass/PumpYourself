@@ -47,11 +47,11 @@ class LoginActivity : AppCompatActivity() {
         Fabric.with(this, CrashlyticsCore(), Crashlytics())
         setContentView(R.layout.activity_login)
 
-        /*val userId = AccountManager.getId(this)
+        val userId = AccountManager.getId(this)
         if (userId != -1) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }*/
+        }
 
         rootView = findViewById(R.id.root_view)
         tvOperation = findViewById(R.id.tv_operation)

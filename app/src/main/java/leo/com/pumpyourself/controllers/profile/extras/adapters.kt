@@ -9,8 +9,8 @@ import leo.com.pumpyourself.databinding.ItemFriendNotificationBinding
 import leo.com.pumpyourself.databinding.ItemGroupNotificationBinding
 import leo.com.pumpyourself.databinding.ItemProfileFriendsBinding
 
-class FriendsAdapter(onClick: OnItemClickListener<ItemFriend>)
-    : LazyAdapter<ItemFriend, ItemProfileFriendsBinding>(onClick) {
+class FriendsAdapter(mainClickListener: OnItemClickListener<ItemFriend>, val removeClickListener: OnItemClickListener<ItemFriend>)
+    : LazyAdapter<ItemFriend, ItemProfileFriendsBinding>(mainClickListener) {
 
     override fun bindData(data: ItemFriend, binding: ItemProfileFriendsBinding) {
         binding.tvName.text = data.name
@@ -24,7 +24,7 @@ class FriendsAdapter(onClick: OnItemClickListener<ItemFriend>)
 
         binding.cvContainer.setOnClickListener { itemClickListener?.onLazyItemClick(data) }
 
-        binding.deleteIcon.setOnClickListener {}
+        binding.deleteIcon.setOnClickListener { removeClickListener.onLazyItemClick(data) }
     }
 
     override fun getLayoutId(): Int = R.layout.item_profile_friends

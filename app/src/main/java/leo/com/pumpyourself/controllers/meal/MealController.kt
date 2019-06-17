@@ -93,6 +93,93 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
 
                   val formattedDate = SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).format(calendar.time)
                   binding.tvCalendarDate.text = formattedDate
+
+
+
+
+
+
+
+
+
+
+
+                  val currDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(calendar.time)
+                  val currDateFormatted = SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).format(currDate.time)
+
+                  calendar.add(Calendar.DAY_OF_MONTH, 1)
+                  val tomorrowDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(calendar.time)
+
+                  asyncSafe {
+
+                      val networkResult = PumpYourSelfService.service.getAllFood(
+                              userId, currDateStr, tomorrowDateStr).await()
+
+                      var proteins = 0.0
+                      var fats = 0.0
+                      var carbs = 0.0
+                      var calories = 0.0
+
+                      networkResult.forEach {
+                          proteins += it.proteins
+                          fats += it.fats
+                          carbs += it.carbohydrates
+                          calories += it.calories
+                      }
+
+                      val mealUnits = listOf(
+                              ItemMealUnit("Proteins", "$proteins g"),
+                              ItemMealUnit("Fats", "$fats g"),
+                              ItemMealUnit("Carbs", "$carbs g"),
+                              ItemMealUnit("Calories", "$calories kcal")
+                      )
+
+                      val meals = networkResult.map { ItemMeal(it.userDishId, it.dishName, it.weight,
+                              "http://upe.pl.ua:8080/images/dishes?image_id=${it.photoId}",
+                              it.proteins, it.fats, it.carbohydrates, it.calories) }
+
+                      binding.acvChart.initWithValues(proteins.toInt(), fats.toInt(),
+                              carbs.toInt(), calories.toInt(), "Consumed stuff")
+                      binding.rvMealUnits.initWithGridLay(2, MealUnitAdapter(), mealUnits)
+                      binding.rvMeals.initWithLinLay(LinearLayoutManager.VERTICAL, MealAdapter(controllerThis), meals)
+                  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               }, year, month, day
           )
 

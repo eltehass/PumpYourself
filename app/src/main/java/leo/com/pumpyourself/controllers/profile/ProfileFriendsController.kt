@@ -10,22 +10,27 @@ import leo.com.pumpyourself.controllers.profile.extras.FriendsAdapter
 import leo.com.pumpyourself.controllers.profile.extras.ItemFriend
 import leo.com.pumpyourself.databinding.LayoutProfileFriendsBinding
 import leo.com.pumpyourself.network.Friend
+import leo.com.pumpyourself.network.ProcessFriendRequest
+import leo.com.pumpyourself.network.PumpYourSelfService
 
-class ProfileFriendsController : BaseController<LayoutProfileFriendsBinding>(),
-    LazyAdapter.OnItemClickListener<ItemFriend> {
+class ProfileFriendsController : BaseController<LayoutProfileFriendsBinding>() {
 
     override lateinit var binding: LayoutProfileFriendsBinding
 
-    override fun getLayoutId(): Int = R.layout.layout_profile_friends
-
-    override fun getTitle(): String = "Friends"
+    private lateinit var friendsAdapter: FriendsAdapter
 
     override fun initController() {
 
         val userId = arguments?.get("user_id") as Int? ?: 1
         val friends = arguments?.get("friends") as Array<Friend>? ?: arrayOf()
 
-        binding.rvContainer.initWithLinLay(LinearLayout.VERTICAL, FriendsAdapter(this),
+        friendsAdapter = FriendsAdapter(object : LazyAdapter.OnItemClickListener<ItemFriend> {
+            override fun onLazyItemClick(data: ItemFriend) { onFriendItemClick(data) }
+        }, object : LazyAdapter.OnItemClickListener<ItemFriend> {
+            override fun onLazyItemClick(data: ItemFriend) { onFriendItemRemoveClick(data) }
+        })
+
+        binding.rvContainer.initWithLinLay(LinearLayout.VERTICAL, friendsAdapter,
             friends.map { item -> ItemFriend(userId, item.friendId,
                 item.userName, item.userStatus,
                 "http://upe.pl.ua:8080/images/users?image_id=" + item.friendId) })
@@ -42,7 +47,7 @@ class ProfileFriendsController : BaseController<LayoutProfileFriendsBinding>(),
         }
     }
 
-    override fun onLazyItemClick(data: ItemFriend) {
+    fun onFriendItemClick(data: ItemFriend) {
         val friendController = FriendProfileController()
         val bundle = Bundle()
         bundle.putSerializable("item_friend", data)
@@ -50,4 +55,16 @@ class ProfileFriendsController : BaseController<LayoutProfileFriendsBinding>(),
 
         show(TAB_PROFILE, friendController)
     }
+
+    fun onFriendItemRemoveClick(data: ItemFriend) {
+        asyncSafe {
+            val result = PumpYourSelfService.service.removeFriend(ProcessFriendRequest(data.userId, data.friendId)).await()
+            friendsAdapter.removeData(data)
+        }
+    }
+
+    override fun getLayoutId(): Int = R.layout.layout_profile_friends
+
+    override fun getTitle(): String = "Friends"
+
 }

@@ -16,9 +16,15 @@ abstract class LazyAdapter <DataType, LayoutClassBinding : ViewDataBinding> (val
         notifyDataSetChanged()
     }
 
-    fun addData(dataElement: DataType) {
+    fun addData(dataElement: DataType): Boolean {
+        if (data.contains(dataElement)) {
+            return false
+        }
+
         data.add(dataElement)
-        notifyItemInserted(data.size - 1)
+        notifyDataSetChanged()
+        return true
+//        notifyItemInserted(data.size - 1)
     }
 
     fun removeData(dataElement: DataType) {
