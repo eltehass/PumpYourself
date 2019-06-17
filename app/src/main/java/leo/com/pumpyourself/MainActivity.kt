@@ -11,10 +11,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.widget.Toast
-import com.crashlytics.android.answers.Answers
 import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_main.*
 import leo.com.pumpyourself.common.CameraEvent
 import leo.com.pumpyourself.common.Constants.CAMERA_REQUEST
@@ -72,7 +70,6 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    Fabric.with(this, Answers())
     setContentView(R.layout.activity_main)
 
     val toolbar = findViewById<Toolbar>(R.id.toolbar_actionbar)

@@ -27,11 +27,13 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
   var month: Int = -1
   var day: Int = -1
 
-  var userId = AccountManager.getId(context!!)
+  private var userId: Int = -1
 
   override fun initController() {
 
       val controllerThis = this
+
+      userId = AccountManager.getId(context!!)
 
       val currDate = Calendar.getInstance()
       val currDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(currDate.time)
