@@ -11,7 +11,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.widget.Toast
+import com.crashlytics.android.answers.Answers
+import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_main.*
 import leo.com.pumpyourself.common.CameraEvent
 import leo.com.pumpyourself.common.Constants.CAMERA_REQUEST
@@ -36,7 +39,7 @@ class MainActivity : AppCompatActivity() {
   private val LOADING_PHRASE_CONFIG_KEY = "loading_phrase"
   private val WELCOME_MESSAGE_KEY = "welcome_message"
   private val WELCOME_MESSAGE_CAPS_KEY = "welcome_message_caps"
-  private var mFirebaseRemoteConfig: FirebaseRemoteConfig? = null
+  private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
 
   private val controllerStacks: HashMap<String, Stack<Fragment>> = hashMapOf()
   private var currentControllerTabName = ""
@@ -69,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    Fabric.with(this, Answers())
     setContentView(R.layout.activity_main)
 
     val toolbar = findViewById<Toolbar>(R.id.toolbar_actionbar)
@@ -84,58 +88,26 @@ class MainActivity : AppCompatActivity() {
     navigation.selectedItemId = R.id.navigation_meal
 
 
-    // Get Remote Config instance.
-    // [START get_remote_config_instance]
-//    mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-    // [END get_remote_config_instance]
+    val firebaseApp = FirebaseApp.initializeApp(this)
+    mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+    mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults)
 
-    // Create a Remote Config Setting to enable developer mode, which you can use to increase
-    // the number of fetches available per hour during development. Also use Remote Config
-    // Setting to set the minimum fetch interval.
-    // [START enable_dev_mode]
-//    val configSettings = FirebaseRemoteConfigSettings.Builder()
-//      .setDeveloperModeEnabled(BuildConfig.DEBUG)
-//      .setMinimumFetchIntervalInSeconds(3600)
-//      .build()
-//    mFirebaseRemoteConfig?.setConfigSettings(configSettings)
-    // [END enable_dev_mode]
-
-    // Set default Remote Config parameter values. An app uses the in-app default values, and
-    // when you need to adjust those defaults, you set an updated value for only the values you
-    // want to change in the Firebase console. See Best Practices in the README for more
-    // information.
-    // [START set_default_values]
-//    mFirebaseRemoteConfig?.setDefaults(R.xml.remote_config_defaults)
-    // [END set_default_values]
-
-//    fetchWelcome()
+    fetchWelcome()
   }
 
   /**
    * Fetch a welcome message from the Remote Config service, and then activate it.
    */
   private fun fetchWelcome() {
-//    mWelcomeTextView.setText(mFirebaseRemoteConfig.getString(LOADING_PHRASE_CONFIG_KEY))
-
-    // [START fetch_config_with_callback]
-    mFirebaseRemoteConfig?.fetchAndActivate()
-      ?.addOnCompleteListener(this) { task ->
+    mFirebaseRemoteConfig.fetchAndActivate()?.addOnCompleteListener(this) { task ->
         if (task.isSuccessful) {
           val updated = task.result!!
           Log.d("MainActivity", "Config params updated: $updated")
-          Toast.makeText(
-            this@MainActivity, "Fetch and activate succeeded",
-            Toast.LENGTH_SHORT
-          ).show()
-
+          Toast.makeText(this@MainActivity, "Welcome message: ${mFirebaseRemoteConfig.getString(WELCOME_MESSAGE_KEY)}", Toast.LENGTH_LONG).show()
         } else {
-          Toast.makeText(
-            this@MainActivity, "Fetch failed",
-            Toast.LENGTH_SHORT
-          ).show()
+          Toast.makeText(this@MainActivity, "Fetch failed", Toast.LENGTH_LONG).show()
         }
       }
-    // [END fetch_config_with_callback]
   }
 
   fun showToolbar() {
