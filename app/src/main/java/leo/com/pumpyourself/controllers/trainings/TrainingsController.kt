@@ -3,6 +3,7 @@ package leo.com.pumpyourself.controllers.trainings
 import android.os.Bundle
 import android.widget.LinearLayout
 import leo.com.pumpyourself.R
+import leo.com.pumpyourself.common.AccountManager
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
@@ -19,8 +20,7 @@ class TrainingsController : BaseController<LayoutTrainingsBinding>(), LazyAdapte
 
     override lateinit var binding: LayoutTrainingsBinding
 
-    // TODO: Get user id
-    var userId = 1
+    var userId = AccountManager.getId(context!!)
 
     override fun initController() {
 

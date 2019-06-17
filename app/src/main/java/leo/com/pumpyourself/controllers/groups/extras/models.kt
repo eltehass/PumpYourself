@@ -10,6 +10,7 @@ data class ItemGroup(
 ) : Serializable
 
 data class ItemMember(
+    val userId: Int,
     val name: String,
     val imgUrl: String
 )

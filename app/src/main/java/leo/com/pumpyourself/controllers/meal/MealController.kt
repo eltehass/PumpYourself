@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import leo.com.pumpyourself.R
+import leo.com.pumpyourself.common.AccountManager
 import leo.com.pumpyourself.common.initWithValues
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
@@ -26,8 +27,7 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
   var month: Int = -1
   var day: Int = -1
 
-  // TODO: Get user id
-  var userId = 1
+  var userId = AccountManager.getId(context!!)
 
   override fun initController() {
 

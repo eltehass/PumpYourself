@@ -112,7 +112,7 @@ data class EditGroupRequest(
     @SerializedName("group_id") val groupId: Int,
     @SerializedName("name") val name: String,
     @SerializedName("description") val description: String,
-    @SerializedName("photo") val photo: String
+    @SerializedName("photo") val photo: String?
 ) : Serializable
 
 data class InviteFriendInGroupRequest(
@@ -177,4 +177,12 @@ data class ProcessGroupRequest(
 data class ProcessFriendRequest(
     @SerializedName("user_id") val userId: Int,
     @SerializedName("friend_id") val userName: Int
+) : Serializable
+
+data class RegisterInfo(
+    @SerializedName("login") val login: String,
+    @SerializedName("password") val password: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("status") val status: String,
+    @SerializedName("photo") val photo: String?
 ) : Serializable

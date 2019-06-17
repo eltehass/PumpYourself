@@ -51,11 +51,12 @@ class DayExercisesAdapter : LazyAdapter<ItemDayExercise, ItemDayExerciseBinding>
   override fun getLayoutId(): Int = R.layout.item_day_exercise
 }
 
-class FriendsAdapter : LazyAdapter<ItemFriend, ItemChooseFriendBinding>() {
+class FriendsAdapter(onClick: OnItemClickListener<ItemFriend>) : LazyAdapter<ItemFriend, ItemChooseFriendBinding>(onClick) {
 
   override fun bindData(data: ItemFriend, binding: ItemChooseFriendBinding) {
     binding.tvName.text = data.name
     binding.tvStatus.text = data.status
+    binding.cvContainer.setOnClickListener { itemClickListener?.onLazyItemClick(data) }
 
     if (data.imgUrl.isNotEmpty()) {
       binding.ivIcon.setCircleImgUrl(data.imgUrl)

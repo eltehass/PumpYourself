@@ -27,8 +27,7 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-    // TODO: Get user ID
-    val userId = 1
+    val userId = AccountManager.getId(context!!)
 
     val view = super.onCreateView(inflater, container, savedInstanceState)
 
@@ -84,8 +83,7 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
 
   override fun initController() {
 
-    // TODO: Get user id
-      val userId = 1
+      val userId = AccountManager.getId(context!!)
 
       asyncSafe {
 

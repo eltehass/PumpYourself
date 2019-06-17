@@ -88,8 +88,6 @@ class ProfileNotificationsController : BaseController<LayoutProfileNotifications
             groupsRequests.map { item -> ItemGroup(userId, item.groupId.toInt(), item.groupName, item.groupDescription,
                 "http://upe.pl.ua:8080/images/groups?image_id=" + item.groupId) })
 
-        // TODO: Add accepting and declining the friend requests
-
         binding.rvContainerFriends.initWithLinLay(
             LinearLayout.VERTICAL, FriendsRequestsAdapter(
                 object : LazyAdapter.OnItemClickListener<ItemFriend> {

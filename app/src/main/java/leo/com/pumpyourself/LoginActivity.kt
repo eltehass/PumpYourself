@@ -12,11 +12,14 @@ import android.view.animation.Animation
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import leo.com.pumpyourself.common.AccountManager
 import leo.com.pumpyourself.network.AndroidCoroutineContextElement
+import leo.com.pumpyourself.network.PumpYourSelfService
+import leo.com.pumpyourself.network.RegisterInfo
 import leo.com.pumpyourself.network.doCoroutineWork
 
 class LoginActivity : AppCompatActivity() {
@@ -41,11 +44,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 //        FirebaseApp.initializeApp(this)
 
-        val userId = AccountManager.getId(this)
+        /*val userId = AccountManager.getId(this)
         if (userId != -1) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }
+        }*/
 
         rootView = findViewById(R.id.root_view)
         tvOperation = findViewById(R.id.tv_operation)
@@ -94,17 +97,35 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnAction.setOnClickListener {
-            // TODO add requests
 
             asyncSafe {
-                // todo write logIn or register requests depands on isLoginScreenState
-                val id = 5
-                AccountManager.setId(id, this@LoginActivity)
-            }
+                if (isLoginScreenState) {
+                    val id = PumpYourSelfService.service.login(
+                        etLogin.text.toString(), etPassword.text.toString()).await()
 
-            if (userId != -1) {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                    if (id != -1) {
+                        AccountManager.setId(id, this@LoginActivity)
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        finish()
+                    }
+                    else {
+                        Toast.makeText(it.context, "Login failed", Toast.LENGTH_LONG).show()
+                    }
+                }
+                else {
+                    if (etPassword.text.toString() != etRepeatPassword.text.toString()) {
+                        Toast.makeText(it.context, "Passwords do not match", Toast.LENGTH_LONG).show()
+                    }
+                    else {
+                        val id = PumpYourSelfService.service.register(RegisterInfo(
+                            etLogin.text.toString(), etPassword.text.toString(),
+                            etLogin.text.toString(), "Status", null)).await()
+
+                        AccountManager.setId(id, this@LoginActivity)
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        finish()
+                    }
+                }
             }
         }
     }

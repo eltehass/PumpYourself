@@ -3,6 +3,7 @@ package leo.com.pumpyourself.controllers.groups
 import android.os.Bundle
 import android.widget.LinearLayout
 import leo.com.pumpyourself.R
+import leo.com.pumpyourself.common.AccountManager
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
@@ -15,8 +16,7 @@ class GroupsController : BaseController<LayoutGroupsBinding>(), LazyAdapter.OnIt
 
   override lateinit var binding: LayoutGroupsBinding
 
-  // TODO: Get user id
-  var userId = 1
+  var userId = AccountManager.getId(context!!)
 
   override fun initController() {
 

@@ -9,6 +9,8 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,14 +24,13 @@ import leo.com.pumpyourself.common.Constants
 import leo.com.pumpyourself.common.encodeToBase64
 import leo.com.pumpyourself.common.setCircleImgBitmap
 import leo.com.pumpyourself.controllers.base.BaseController
+import leo.com.pumpyourself.controllers.base.recycler.LazyAdapter
 import leo.com.pumpyourself.controllers.base.recycler.initWithLinLay
-import leo.com.pumpyourself.controllers.groups.extras.DayExercisesAdapter
-import leo.com.pumpyourself.controllers.groups.extras.ItemDayExercise
-import leo.com.pumpyourself.controllers.groups.extras.ItemMember
-import leo.com.pumpyourself.controllers.groups.extras.MembersAdapter
+import leo.com.pumpyourself.controllers.groups.extras.*
 import leo.com.pumpyourself.databinding.LayoutCreateGroupBinding
 import leo.com.pumpyourself.network.AddGroupRequest
 import leo.com.pumpyourself.network.CreateTrainingRequest
+import leo.com.pumpyourself.network.InviteFriendInGroupRequest
 import leo.com.pumpyourself.network.PumpYourSelfService
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -40,60 +41,87 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
 
   override lateinit var binding: LayoutCreateGroupBinding
 
-  private lateinit var dialog: AlertDialog
+  private lateinit var dialogAddDay: AlertDialog
+  private lateinit var dialogAddMember: AlertDialog
 
   private val members: MutableList<ItemMember> = mutableListOf()
   private val daysInfo: MutableList<ItemDayExercise> = mutableListOf()
 
   private var mealBitmap: Bitmap? = null
 
+  var userId : Int = 1
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    val view = super.onCreateView(inflater, container, savedInstanceState)
+  private fun createDialog() {
 
-    dialog = AlertDialog.Builder(binding.root.context).create()
+    dialogAddDay = AlertDialog.Builder(binding.root.context).create()
+    dialogAddMember = AlertDialog.Builder(binding.root.context).create()
 
-    val dialogView = inflater.inflate(R.layout.dialog_add_day, null)
-    val dialogEditText = dialogView.findViewById<EditText>(R.id.et_description)
+    // Add day dialog
+    val dialogAddDayView = LayoutInflater.from(context!!).inflate(R.layout.dialog_add_day, null)
+    val dialogAddDayText = dialogAddDayView.findViewById<EditText>(R.id.et_description)
 
-    dialogView.findViewById<TextView>(R.id.tv_cancel).setOnClickListener { dialog.dismiss() }
-    dialogView.findViewById<TextView>(R.id.tv_add).setOnClickListener {
-      if (dialogEditText.text.toString().isEmpty()) {
+    dialogAddDayView.findViewById<TextView>(R.id.tv_cancel).setOnClickListener { dialogAddDay.dismiss() }
+    dialogAddDayView.findViewById<TextView>(R.id.tv_add).setOnClickListener {
+      if (dialogAddDayText.text.toString().isEmpty()) {
         Toast.makeText(it.context, "Field is empty", Toast.LENGTH_LONG).show()
       } else {
         (binding.rvDays.adapter as DayExercisesAdapter).let{ adapter ->
-          adapter.addData(ItemDayExercise("Day${adapter.itemCount+1}", dialogEditText.text.toString()))
-          daysInfo.add(ItemDayExercise("Day ${adapter.itemCount}", dialogEditText.text.toString()))
+          adapter.addData(ItemDayExercise("Day${adapter.itemCount+1}", dialogAddDayText.text.toString()))
+          daysInfo.add(ItemDayExercise("Day ${adapter.itemCount}", dialogAddDayText.text.toString()))
         }
 
-        dialogEditText.setText("")
-        dialog.dismiss()
+        dialogAddDayText.setText("")
+        dialogAddDay.dismiss()
       }
     }
 
-    dialog.setView(dialogView)
-    dialog.setCancelable(true)
+    dialogAddDay.setView(dialogAddDayView)
+    dialogAddDay.setCancelable(true)
 
-    return view
+      // Add member dialog
+      val dialogAddMemberView = LayoutInflater.from(context!!).inflate(R.layout.dialog_invite_friend, null)
+
+      asyncSafe {
+          val networkResult = PumpYourSelfService.service.getProfileInfo(userId).await()
+
+          val friends = networkResult.friends.map {
+              ItemFriend(it.friendId, it.userName, it.userStatus,
+                  "http://upe.pl.ua:8080/images/users?image_id=${it.friendId}")
+          }
+
+          dialogAddMemberView.findViewById<RecyclerView>(R.id.rv_container).initWithLinLay(
+              LinearLayout.VERTICAL, FriendsAdapter(
+                  object : LazyAdapter.OnItemClickListener<ItemFriend> {
+                      override fun onLazyItemClick(data: ItemFriend) {
+                          (binding.rvMembers.adapter as MembersAdapter).let{ adapter ->
+                              adapter.addData(ItemMember(data.friendId, data.name, data.imgUrl))
+                              members.add(ItemMember(data.friendId, data.name, data.imgUrl))
+                          }
+                          dialogAddMember.dismiss()
+                      }
+                  }
+              ), friends)
+
+          dialogAddMember.setView(dialogAddMemberView)
+          dialogAddMember.setCancelable(true)
+      }
   }
 
   override fun initController() {
 
-    val userId = arguments?.get("user_id") as Int? ?: 1
+    userId = arguments?.get("user_id") as Int? ?: 1
+
+    createDialog()
 
     binding.rvMembers.initWithLinLay(LinearLayout.VERTICAL, MembersAdapter(), listOf())
     binding.rvDays.initWithLinLay(LinearLayout.VERTICAL, DayExercisesAdapter(), listOf())
 
     binding.tvAddMember.setOnClickListener {
-      val friendsController = FriendsController()
-      val bundle = Bundle()
-      bundle.putSerializable("user_id", userId)
-      friendsController.arguments = bundle
-      show(TAB_GROUPS, friendsController)
+        dialogAddMember.show()
     }
 
     binding.tvAddDay.setOnClickListener {
-      dialog.show()
+        dialogAddDay.show()
     }
 
     binding.ivGroupIcon.setOnClickListener {
@@ -125,9 +153,15 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
 
         val photoBase64 = if (mealBitmap != null) encodeToBase64(mealBitmap!!, context!!) else null
 
-        PumpYourSelfService.service.addGroup(AddGroupRequest(
+        val groupId = PumpYourSelfService.service.addGroup(AddGroupRequest(
           userId, binding.etGroupName.text.toString(), binding.etGroupDescription.text.toString(),
           photoBase64, trainingId, currDateStr)).await()
+
+        // Sending the invitations
+        members.forEach {
+            PumpYourSelfService.service.inviteFriendIntoGroup(
+                InviteFriendInGroupRequest(userId, it.userId, groupId)).await()
+        }
 
         mainActivity.onBackPressed()
       }
