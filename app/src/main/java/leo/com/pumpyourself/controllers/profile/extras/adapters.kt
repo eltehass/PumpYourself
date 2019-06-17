@@ -23,6 +23,8 @@ class FriendsAdapter(onClick: OnItemClickListener<ItemFriend>)
         }
 
         binding.cvContainer.setOnClickListener { itemClickListener?.onLazyItemClick(data) }
+
+        binding.deleteIcon.setOnClickListener {}
     }
 
     override fun getLayoutId(): Int = R.layout.item_profile_friends

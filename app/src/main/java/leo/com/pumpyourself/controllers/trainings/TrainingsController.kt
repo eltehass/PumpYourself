@@ -20,9 +20,11 @@ class TrainingsController : BaseController<LayoutTrainingsBinding>(), LazyAdapte
 
     override lateinit var binding: LayoutTrainingsBinding
 
-    var userId = AccountManager.getId(context!!)
+    var userId : Int = 1
 
     override fun initController() {
+
+        userId = AccountManager.getId(context!!)
 
         val controllerThis = this
 

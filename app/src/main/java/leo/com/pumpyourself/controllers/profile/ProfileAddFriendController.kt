@@ -38,7 +38,7 @@ class ProfileAddFriendController : BaseController<LayoutProfileAddFriendBinding>
                                 // Sending the friend request
                                 asyncSafe {
                                     PumpYourSelfService.service.sendFriendRequest(
-                                        ProcessFriendRequest(userId, data.friendId))
+                                        ProcessFriendRequest(userId, data.friendId)).await()
 
                                     Toast.makeText(context, "Request was sent", Toast.LENGTH_LONG).show()
                                 }

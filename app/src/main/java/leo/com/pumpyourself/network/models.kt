@@ -166,7 +166,8 @@ data class UserInfo(
 data class ChangeUserInfo(
     @SerializedName("user_id") val userId: Int,
     @SerializedName("name") val userName: String,
-    @SerializedName("status") val userStatus: String
+    @SerializedName("status") val userStatus: String,
+    @SerializedName("photo") val photo: String?
 ) : Serializable
 
 data class ProcessGroupRequest(

@@ -26,7 +26,7 @@ class ProfileFriendsController : BaseController<LayoutProfileFriendsBinding>(),
         val friends = arguments?.get("friends") as Array<Friend>? ?: arrayOf()
 
         binding.rvContainer.initWithLinLay(LinearLayout.VERTICAL, FriendsAdapter(this),
-            friends.map { item -> ItemFriend(userId, item.friendId.toInt(),
+            friends.map { item -> ItemFriend(userId, item.friendId,
                 item.userName, item.userStatus,
                 "http://upe.pl.ua:8080/images/users?image_id=" + item.friendId) })
 

@@ -26,6 +26,7 @@ import leo.com.pumpyourself.controllers.groups.extras.*
 import leo.com.pumpyourself.databinding.LayoutEditGroupBinding
 import leo.com.pumpyourself.network.EditGroupRequest
 import leo.com.pumpyourself.network.InviteFriendInGroupRequest
+import leo.com.pumpyourself.network.LeaveGroupRequest
 import leo.com.pumpyourself.network.PumpYourSelfService
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -140,12 +141,21 @@ class EditGroupController : BaseController<LayoutEditGroupBinding>() {
           val photoBase64 = if (mealBitmap != null) encodeToBase64(mealBitmap!!, context!!) else null
 
           asyncSafe {
-              PumpYourSelfService.service.editGroup(EditGroupRequest(itemGroup.groupId,
+              PumpYourSelfService.service.editGroup(EditGroupRequest(groupId,
                   binding.etGroupName.text.toString(), binding.etGroupDescription.text.toString(),
                   photoBase64)).await()
-          }
 
-          mainActivity.onBackPressed()
+              mainActivity.onBackPressed()
+          }
+      }
+
+      binding.tvRemove.setOnClickListener {
+
+          asyncSafe {
+              PumpYourSelfService.service.leaveTheGroup(LeaveGroupRequest(userId, groupId)).await()
+
+              mainActivity.onBackPressed()
+          }
       }
   }
 

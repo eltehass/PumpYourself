@@ -95,6 +95,9 @@ interface PumpYourselfApi {
     @POST("profile/declinefriendrequest")
     fun declineFriendRequest(@Body friendRequest: ProcessFriendRequest): Deferred<Unit>
 
+    @POST("profile/removefriend")
+    fun removeFriend(@Body friendRequest: ProcessFriendRequest): Deferred<Unit>
+
     @GET("profile/login")
     fun login(
         @Query("login") login: String,

@@ -16,9 +16,11 @@ class GroupsController : BaseController<LayoutGroupsBinding>(), LazyAdapter.OnIt
 
   override lateinit var binding: LayoutGroupsBinding
 
-  var userId = AccountManager.getId(context!!)
+  var userId : Int = 1
 
   override fun initController() {
+
+      userId = AccountManager.getId(context!!)
 
       val controllerThis = this
 
