@@ -41,6 +41,10 @@ data class EditEatingRequest(
     @SerializedName("calories") val calories: Double
 ) : Serializable
 
+data class DeleteEatingRequest(
+    @SerializedName("user_dish_id") val userDishId: Int
+) : Serializable
+
 data class UserTrainingResponse(
     @SerializedName("Training_ID") val trainingID: Int,
     @SerializedName("Training_name") val trainingName: String,

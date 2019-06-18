@@ -31,7 +31,7 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
   private lateinit var logOutDialog: AlertDialog
   private lateinit var infoDialog: AlertDialog
 
-  private var mealBitmap: Bitmap? = null
+  private var photoBitmap: Bitmap? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -80,7 +80,7 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
         Toast.makeText(it.context, "Empty field", Toast.LENGTH_LONG).show()
       } else {
           asyncSafe {
-              val photoBase64 = if (mealBitmap != null) encodeToBase64(mealBitmap!!, context!!) else null
+              val photoBase64 = if (photoBitmap != null) encodeToBase64(photoBitmap!!, context!!) else null
 
               PumpYourSelfService.service.changeProfileInfo(ChangeUserInfo(
                   userId, infoDialogName.text.toString(), infoDialogStatus.text.toString(),
@@ -155,6 +155,6 @@ class ProfileController : BaseController<LayoutProfileBinding>() {
     fun onCameraEvent(event: CameraEvent) {
         LayoutInflater.from(context!!).inflate(R.layout.dialog_log_out, null)
             .findViewById<ImageView>(R.id.iv_icon).setCircleImgBitmap(event.bitmap)
-        mealBitmap = event.bitmap
+        photoBitmap = event.bitmap
     }
 }
