@@ -18,6 +18,7 @@ import leo.com.pumpyourself.common.Constants.MY_CAMERA_PERMISSION_CODE
 import leo.com.pumpyourself.controllers.base.BaseController
 import leo.com.pumpyourself.controllers.meal.extras.ItemMeal
 import leo.com.pumpyourself.databinding.LayoutEditMealBinding
+import leo.com.pumpyourself.network.DeleteEatingRequest
 import leo.com.pumpyourself.network.EditEatingRequest
 import leo.com.pumpyourself.network.PumpYourSelfService
 import okhttp3.MediaType
@@ -64,7 +65,9 @@ class EditMealController : BaseController<LayoutEditMealBinding>() {
 
         binding.tvRemove.setOnClickListener {
             asyncSafe {
-                PumpYourSelfService.service.deleteEating(itemMeal.userDishId).await()
+                PumpYourSelfService.service.deleteEating(
+                    DeleteEatingRequest(itemMeal.userDishId)
+                ).await()
 
                 mainActivity.onBackPressed()
             }

@@ -23,7 +23,7 @@ interface PumpYourselfApi {
     fun editEating(@Body meal: EditEatingRequest): Deferred<Unit>
 
     @POST("meal/deleteeating")
-    fun deleteEating(@Body user_dish_id: Int): Deferred<Int>
+    fun deleteEating(@Body meal: DeleteEatingRequest): Deferred<Unit>
 
     /** Trainings **/
     @GET("trainings/getallusertrainings")

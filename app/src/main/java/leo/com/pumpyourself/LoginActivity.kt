@@ -24,6 +24,8 @@ import leo.com.pumpyourself.network.AndroidCoroutineContextElement
 import leo.com.pumpyourself.network.PumpYourSelfService
 import leo.com.pumpyourself.network.RegisterInfo
 import leo.com.pumpyourself.network.doCoroutineWork
+import java.security.MessageDigest
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -103,8 +105,14 @@ class LoginActivity : AppCompatActivity() {
 
             asyncSafe {
                 if (isLoginScreenState) {
+
+                    val md = MessageDigest.getInstance("MD5")
+                    md.update(etPassword.text.toString().toByteArray(Charsets.UTF_8))
+                    val digest = md.digest()
+                    val myHash = digest.toHexString().toUpperCase()
+
                     val id = PumpYourSelfService.service.login(
-                        etLogin.text.toString(), etPassword.text.toString()).await()
+                        etLogin.text.toString(), myHash).await()
 
                     if (id != -1) {
                         AccountManager.setId(id, this@LoginActivity)
@@ -120,8 +128,14 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(it.context, "Passwords do not match", Toast.LENGTH_LONG).show()
                     }
                     else {
+
+                        val md = MessageDigest.getInstance("MD5")
+                        md.update(etPassword.text.toString().toByteArray())
+                        val digest = md.digest()
+                        val myHash = digest.toHexString().toUpperCase()
+
                         val id = PumpYourSelfService.service.register(RegisterInfo(
-                            etLogin.text.toString(), etPassword.text.toString(),
+                            etLogin.text.toString(), myHash,
                             etLogin.text.toString(), "Status", null)).await()
 
                         AccountManager.setId(id, this@LoginActivity)
@@ -133,9 +147,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
     fun <P> asyncSafe(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
         doCoroutineWork(doOnAsyncBlock, coroutineScope, AndroidCoroutineContextElement)
     }
 
+    @ExperimentalUnsignedTypes
+    fun ByteArray.toHexString() = asUByteArray().joinToString("") {
+        it.toString(16).padStart(2, '0')
+    }
 }

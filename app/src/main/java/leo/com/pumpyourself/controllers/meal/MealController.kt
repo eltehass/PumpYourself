@@ -94,16 +94,6 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
                   val formattedDate = SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).format(calendar.time)
                   binding.tvCalendarDate.text = formattedDate
 
-
-
-
-
-
-
-
-
-
-
                   val currDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(calendar.time)
                   val currDateFormatted = SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).format(currDate.time)
 
@@ -143,43 +133,6 @@ class MealController : BaseController<LayoutMealBinding>(), LazyAdapter.OnItemCl
                       binding.rvMealUnits.initWithGridLay(2, MealUnitAdapter(), mealUnits)
                       binding.rvMeals.initWithLinLay(LinearLayoutManager.VERTICAL, MealAdapter(controllerThis), meals)
                   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
               }, year, month, day
           )
 
