@@ -10,11 +10,14 @@ import com.anychart.enums.HoverMode
 import com.anychart.enums.Position
 import com.anychart.enums.TooltipPositionMode
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 
 fun ImageView.setCircleImgUrl(imgUrl: String) {
     Glide.with(context)
         .load(imgUrl)
+        .diskCacheStrategy(DiskCacheStrategy.NONE)
+        .skipMemoryCache(true)
         .apply(RequestOptions.circleCropTransform())
         .into(this)
 }
@@ -29,6 +32,8 @@ fun ImageView.setCircleImgBitmap(bitmap: Bitmap) {
 fun ImageView.setImgUrl(imgUrl: String) {
     Glide.with(context)
         .load(imgUrl)
+        .diskCacheStrategy(DiskCacheStrategy.NONE)
+        .skipMemoryCache(true)
         .into(this)
 }
 
