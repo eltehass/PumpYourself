@@ -160,25 +160,36 @@ class CreateGroupController : BaseController<LayoutCreateGroupBinding>() {
         val currDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 .format(Calendar.getInstance().time)
 
-        asyncSafe {
-            val trainingId = PumpYourSelfService.service.createTraining(daysInfo.map {
-                CreateTrainingRequest(binding.etGroupName.text.toString() + "_training", "",
-                        it.name.substring(4).toInt(), it.description)
-            }).await()
+        if (daysInfo.size < 1) {
+            Toast.makeText(context!!, "At least one day needed", Toast.LENGTH_LONG).show()
+        } else {
 
-            val photoBase64 = if (mealBitmap != null) encodeToBase64(mealBitmap!!, context!!) else null
+            asyncSafe {
+                val trainingId = PumpYourSelfService.service.createTraining(daysInfo.map {
+                    CreateTrainingRequest(
+                        binding.etGroupName.text.toString() + "_training", "",
+                        it.name.substring(4).toInt(), it.description
+                    )
+                }).await()
 
-            val groupId = PumpYourSelfService.service.addGroup(AddGroupRequest(
-                    userId, binding.etGroupName.text.toString(), binding.etGroupDescription.text.toString(),
-                    photoBase64, trainingId, currDateStr)).await()
+                val photoBase64 = if (mealBitmap != null) encodeToBase64(mealBitmap!!, context!!) else null
 
-            // Sending the invitations
-            members.forEach {
-                PumpYourSelfService.service.inviteFriendIntoGroup(
-                        InviteFriendInGroupRequest(userId, it.userId, groupId)).await()
+                val groupId = PumpYourSelfService.service.addGroup(
+                    AddGroupRequest(
+                        userId, binding.etGroupName.text.toString(), binding.etGroupDescription.text.toString(),
+                        photoBase64, trainingId, currDateStr
+                    )
+                ).await()
+
+                // Sending the invitations
+                members.forEach {
+                    PumpYourSelfService.service.inviteFriendIntoGroup(
+                        InviteFriendInGroupRequest(userId, it.userId, groupId)
+                    ).await()
+                }
+
+                mainActivity.onBackPressed()
             }
-
-            mainActivity.onBackPressed()
         }
     }
 

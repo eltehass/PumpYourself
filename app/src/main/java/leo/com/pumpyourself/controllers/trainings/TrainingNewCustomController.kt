@@ -70,21 +70,29 @@ class TrainingNewCustomController : BaseController<LayoutTrainingNewCustomBindin
 
         binding.tvSave.setOnClickListener {
 
-            val currDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .format(Calendar.getInstance().time)
+            if (daysInfo.size < 1) {
+                Toast.makeText(context!!, "At least one day needed", Toast.LENGTH_LONG).show()
+            } else {
 
-            asyncSafe {
-                val trainingId = PumpYourSelfService.service.createTraining(daysInfo.map {
-                    CreateTrainingRequest(binding.tvTrainingName.text.toString(),
-                        binding.tvTrainingDescription.text.toString(),
-                        it.name.substring(4).toInt(),
-                        it.description)
-                }).await()
+                val currDateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                    .format(Calendar.getInstance().time)
 
-                PumpYourSelfService.service.startTraining(
-                    StartTrainingRequest(userId, trainingId, currDateStr)).await()
+                asyncSafe {
+                    val trainingId = PumpYourSelfService.service.createTraining(daysInfo.map {
+                        CreateTrainingRequest(
+                            binding.tvTrainingName.text.toString(),
+                            binding.tvTrainingDescription.text.toString(),
+                            it.name.substring(4).toInt(),
+                            it.description
+                        )
+                    }).await()
 
-                mainActivity.onBackPressed()
+                    PumpYourSelfService.service.startTraining(
+                        StartTrainingRequest(userId, trainingId, currDateStr)
+                    ).await()
+
+                    mainActivity.onBackPressed()
+                }
             }
         }
     }

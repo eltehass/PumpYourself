@@ -111,15 +111,17 @@ class LoginActivity : AppCompatActivity() {
                     val digest = md.digest()
                     val myHash = digest.toHexString().toUpperCase()
 
-                    val id = PumpYourSelfService.service.login(
-                        etLogin.text.toString(), myHash).await()
+                    try {
+                        val id = PumpYourSelfService.service.login(etLogin.text.toString(), myHash).await()
 
-                    if (id != -1) {
-                        AccountManager.setId(id, this@LoginActivity)
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        finish()
-                    }
-                    else {
+                        if (id != -1) {
+                            AccountManager.setId(id, this@LoginActivity)
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(it.context, "Login failed", Toast.LENGTH_LONG).show()
+                        }
+                    } catch (e: Throwable) {
                         Toast.makeText(it.context, "Login failed", Toast.LENGTH_LONG).show()
                     }
                 }
@@ -134,13 +136,20 @@ class LoginActivity : AppCompatActivity() {
                         val digest = md.digest()
                         val myHash = digest.toHexString().toUpperCase()
 
-                        val id = PumpYourSelfService.service.register(RegisterInfo(
-                            etLogin.text.toString(), myHash,
-                            etLogin.text.toString(), "Status", null)).await()
+                        try {
+                            val id = PumpYourSelfService.service.register(
+                                RegisterInfo(
+                                    etLogin.text.toString(), myHash,
+                                    etLogin.text.toString(), "Status", null
+                                )
+                            ).await()
 
-                        AccountManager.setId(id, this@LoginActivity)
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        finish()
+                            AccountManager.setId(id, this@LoginActivity)
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            finish()
+                        } catch (e: Throwable) {
+                            Toast.makeText(it.context, "Register failed", Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
